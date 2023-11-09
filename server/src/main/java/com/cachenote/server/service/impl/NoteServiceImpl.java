@@ -60,7 +60,9 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public NoteResponse getNoteById(String id) {
-        NoteDoc noteDoc = noteRepository.findNoteById(id);
+        NoteDoc noteDoc = noteRepository.findById(id)
+                .orElseThrow(() -> new NoteNotFoundException(id));
+
         return new NoteResponse(noteDoc.getId(), noteDoc.getBody());
     }
 
