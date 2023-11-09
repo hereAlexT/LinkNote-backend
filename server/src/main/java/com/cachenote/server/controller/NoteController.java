@@ -55,4 +55,10 @@ public class NoteController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @ExceptionHandler(NoteNotFoundException.class)
+    public ResponseEntity<String> handleNoteNotFoundException(NoteNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+
 }

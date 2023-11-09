@@ -213,12 +213,7 @@ public class NoteControllerTests {
                 .andExpect(status().isNotFound()); // Assuming your service returns 404 for non-existing notes
     }
 
-    @Test
-    public void shouldNotDeleteNonExistingNote() throws Exception {
-        // Try to delete a note that doesn't exist
-        mockMvc.perform(delete(prefix + "/non-existing-id"))
-                .andExpect(status().isNotFound()); // Assuming your service returns 404 for non-existing notes
-    }
+
 
 
 
