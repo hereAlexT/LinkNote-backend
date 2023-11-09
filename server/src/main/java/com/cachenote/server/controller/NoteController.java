@@ -1,7 +1,6 @@
 package com.cachenote.server.controller;
 
 
-import com.cachenote.server.common.exception.NoteNotFoundException;
 import com.cachenote.server.payload.Reponse.NoteResponse;
 import com.cachenote.server.payload.Request.NoteRequest;
 import com.cachenote.server.service.NoteService;
@@ -27,7 +26,7 @@ public class NoteController {
 
     @PostMapping
     public ResponseEntity<NoteResponse> createNote(@RequestBody NoteRequest noteRequest) {
-        return new ResponseEntity<>(noteService.createNote(noteRequest), HttpStatus.CREATED);
+        return new ResponseEntity<NoteResponse>(noteService.createNote(noteRequest), HttpStatus.CREATED);
 
     }
 
@@ -53,11 +52,6 @@ public class NoteController {
     public ResponseEntity<Void> deleteNoteById(@PathVariable String id) {
         noteService.deleteNoteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @ExceptionHandler(NoteNotFoundException.class)
-    public ResponseEntity<String> handleNoteNotFoundException(NoteNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 
