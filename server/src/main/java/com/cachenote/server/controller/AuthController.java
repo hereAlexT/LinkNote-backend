@@ -1,32 +1,40 @@
-package com.cachenote.server.controller;
-
-
-import com.cachenote.server.entity.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
-
-@RestController
-public class AuthController {
-
-
-    @GetMapping("/hello-world")
-    public User helloWorld() {
-        return new User(1, "hello");
-//        return "Hello World";
-    }
-
-
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        List<User> students = new ArrayList<>();
-        students.add(new User(1, "1st"));
-        students.add(new User(2, "2nd"));
-        return students;
-    }
-
-
-}
+//package com.cachenote.server.controller;
+//
+//
+//import com.cachenote.server.entity.UserDoc;
+//import com.cachenote.server.payload.Request.LoginRequest;
+//import com.cachenote.server.payload.Request.SignupRequest;
+//import com.cachenote.server.service.AuthService;
+//import org.springframework.http.HttpStatus;
+//import org.springframework.http.ResponseEntity;
+//
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RestController;
+//
+//
+//@RestController
+//@RequestMapping("/api/v1/auth")
+//public class AuthController {
+//    private AuthService authService;
+//
+//
+//    public AuthController(AuthService authService) {
+//        this.authService = authService;
+//    }
+//
+//
+//    @PostMapping("/login")
+//    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+//        String response = authService.login(loginRequest);
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    @PostMapping("/signup")
+//    public ResponseEntity<UserDoc> login(@RequestBody SignupRequest signupRequest) {
+//        UserDoc user = authService.signup(signupRequest);
+//        return new ResponseEntity<>(user, HttpStatus.CREATED);
+//    }
+//
+//}

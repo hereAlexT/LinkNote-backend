@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document("note")
-public class Note {
+public class NoteDoc {
 
     @Id
     private String id;
@@ -20,7 +20,7 @@ public class Note {
 
     @Override
     public String toString() {
-        return "Note{" +
+        return "NoteDoc{" +
                 "id='" + id + '\'' +
                 ", body='" + body + '\'' +
                 '}';
