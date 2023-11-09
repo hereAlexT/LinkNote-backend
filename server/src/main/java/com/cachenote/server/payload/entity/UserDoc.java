@@ -1,4 +1,4 @@
-package com.cachenote.server.entity;
+package com.cachenote.server.payload.entity;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

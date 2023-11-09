@@ -1,9 +1,9 @@
 //package com.cachenote.server.controller;
 //
 //
-//import com.cachenote.server.entity.UserDoc;
-//import com.cachenote.server.payload.Request.LoginRequest;
-//import com.cachenote.server.payload.Request.SignupRequest;
+//import com.cachenote.server.payload.entity.UserDoc;
+//import com.cachenote.server.payload.entity.Request.payload.LoginRequest;
+//import com.cachenote.server.payload.entity.Request.payload.SignupRequest;
 //import com.cachenote.server.service.AuthService;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;

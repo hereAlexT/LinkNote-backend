@@ -1,6 +1,6 @@
 //package com.cachenote.server.security;
 //
-//import com.cachenote.server.entity.UserDoc;
+//import com.cachenote.server.payload.entity.UserDoc;
 //import lombok.AllArgsConstructor;
 //import lombok.Data;
 //import lombok.NoArgsConstructor;

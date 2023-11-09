@@ -1,6 +1,6 @@
 package com.cachenote.server.service.impl;
 
-import com.cachenote.server.entity.NoteDoc;
+import com.cachenote.server.payload.entity.NoteDoc;
 import com.cachenote.server.payload.Request.NoteRequest;
 import com.cachenote.server.service.NoteService;
 import org.springframework.stereotype.Service;

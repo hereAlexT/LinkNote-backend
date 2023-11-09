@@ -1,7 +1,7 @@
 package com.cachenote.server.repository;
 
 
-import com.cachenote.server.entity.UserDoc;
+import com.cachenote.server.payload.entity.UserDoc;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
