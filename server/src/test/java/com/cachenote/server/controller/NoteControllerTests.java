@@ -1,6 +1,7 @@
 package com.cachenote.server.controller;
 
 
+import com.cachenote.server.common.GlobalExceptionHandler;
 import com.cachenote.server.payload.Request.NoteRequest;
 
 import com.cachenote.server.service.NoteService;
@@ -9,8 +10,6 @@ import com.jayway.jsonpath.JsonPath;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -54,12 +53,12 @@ public class NoteControllerTests {
 
     private MockMvc mockMvc;
 
-    String prefix = "/api/v1/note";
+    String notePrefix = "/api/v1/note";
 
     @Before
     public void setup() {
         initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(noteController).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(noteController).setControllerAdvice(GlobalExceptionHandler.class).build();
     }
 
     @Test
@@ -70,7 +69,7 @@ public class NoteControllerTests {
         noteRequest.setBody(randomBody);
 
         String json = mapper.writeValueAsString(noteRequest);
-        MvcResult result = mockMvc.perform(post(prefix + "/")
+        MvcResult result = mockMvc.perform(post(notePrefix + "/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isCreated())
@@ -84,7 +83,7 @@ public class NoteControllerTests {
         String id = JsonPath.parse(response).read("$.id");
 
         // perform another request to getNoteById
-        mockMvc.perform(get(prefix + "/" + id)
+        mockMvc.perform(get(notePrefix + "/" + id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON)) // check if the response is JSON
@@ -106,7 +105,7 @@ public class NoteControllerTests {
             noteRequest.setBody(randomBody);
 
             String json = mapper.writeValueAsString(noteRequest);
-            MvcResult result = mockMvc.perform(post(prefix + "/")
+            MvcResult result = mockMvc.perform(post(notePrefix + "/")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(json))
                     .andExpect(status().isCreated())
@@ -124,7 +123,7 @@ public class NoteControllerTests {
         }
 
         // perform another request to getAllNotes
-        MvcResult getAllNotesResult = mockMvc.perform(get(prefix + "/")
+        MvcResult getAllNotesResult = mockMvc.perform(get(notePrefix + "/")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON)) // check if the response is JSON
@@ -155,7 +154,7 @@ public class NoteControllerTests {
         noteRequest.setBody(randomBody);
 
         String json = mapper.writeValueAsString(noteRequest);
-        MvcResult result = mockMvc.perform(post(prefix + "/")
+        MvcResult result = mockMvc.perform(post(notePrefix + "/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isCreated())
@@ -170,7 +169,7 @@ public class NoteControllerTests {
         updateRequest.setBody("Updated body");
 
         json = mapper.writeValueAsString(updateRequest);
-        mockMvc.perform(put(prefix + "/")
+        mockMvc.perform(put(notePrefix + "/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNoContent());
@@ -185,7 +184,7 @@ public class NoteControllerTests {
         noteRequest.setBody(randomBody);
 
         String json = mapper.writeValueAsString(noteRequest);
-        MvcResult result = mockMvc.perform(post(prefix + "/")
+        MvcResult result = mockMvc.perform(post(notePrefix + "/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isCreated())
@@ -195,7 +194,7 @@ public class NoteControllerTests {
         String id = JsonPath.parse(response).read("$.id");
 
         // Delete the note
-        mockMvc.perform(delete(prefix + "/" + id))
+        mockMvc.perform(delete(notePrefix + "/" + id))
                 .andExpect(status().isNoContent());
     }
 
@@ -203,21 +202,27 @@ public class NoteControllerTests {
     public void shouldNotUpdateNonExistingNote() throws Exception {
         // Try to update a note that doesn't exist
         NoteRequest updateRequest = new NoteRequest();
-        updateRequest.setId("non-existing-id");
+        String nonExistingId = UUID.randomUUID().toString();
+        updateRequest.setId(nonExistingId);
         updateRequest.setBody("Updated body");
 
         String json = mapper.writeValueAsString(updateRequest);
-        mockMvc.perform(put(prefix + "/")
+        mockMvc.perform(put(notePrefix + "/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
-                .andExpect(status().isNotFound()); // Assuming your service returns 404 for non-existing notes
+                .andExpect(status().isNotFound());
+
     }
 
 
+    @Test
+    public void shouldNotGetNonExistingNote() throws Exception {
+        // Try to get a note that doesn't exist
+        String nonExistingId = UUID.randomUUID().toString();
 
+        mockMvc.perform(get(notePrefix + "/" + nonExistingId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
 
-
-
-
-
+    }
 }

@@ -5,6 +5,8 @@ import com.cachenote.server.common.ResponseWrapper.OkWrapper;
 import com.cachenote.server.common.ResponseWrapper.ReceptionWrapper;
 import com.cachenote.server.common.exception.NoteNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -16,7 +18,6 @@ public class GlobalExceptionHandler {
     public ReceptionWrapper<String> handleNoteNotFoundException(NoteNotFoundException ex) {
         return new ReceptionWrapper<>("Note Not Found");
     }
-
 }
 
 
