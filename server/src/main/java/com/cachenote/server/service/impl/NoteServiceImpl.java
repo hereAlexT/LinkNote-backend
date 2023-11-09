@@ -1,5 +1,7 @@
 package com.cachenote.server.service.impl;
 
+import com.cachenote.server.common.exception.NoteNotFoundException;
+import com.cachenote.server.payload.Reponse.NoteResponse;
 import com.cachenote.server.payload.entity.NoteDoc;
 import com.cachenote.server.payload.Request.NoteRequest;
 import com.cachenote.server.service.NoteService;
@@ -26,7 +28,7 @@ public class NoteServiceImpl implements NoteService {
 
 
     @Override
-    public NoteRequest createNote(NoteRequest noteRequest) {
+    public NoteResponse createNote(NoteRequest noteRequest) {
 
         //convert DTO to entity
         NoteDoc noteDoc = new NoteDoc();
@@ -36,25 +38,47 @@ public class NoteServiceImpl implements NoteService {
         logger.debug("Created NoteDoc: {}", newNoteDoc.toString());
 
         //convert entity to DTO
-        NoteRequest newResponse = new NoteRequest();
+        NoteResponse newResponse = new NoteResponse();
         newResponse.setId(newNoteDoc.getId());
         newResponse.setBody(newNoteDoc.getBody());
         return newResponse;
     }
 
     @Override
-    public List<NoteRequest> getAllNotes() {
+    public List<NoteResponse> getAllNotes() {
         List<NoteDoc> noteDocs = noteRepository.findAll();
-        List<NoteRequest> response = new ArrayList<>();
 
+
+        List<NoteResponse> response = new ArrayList<>();
         for (NoteDoc noteDoc : noteDocs) {
-            NoteRequest newNoteRequest = new NoteRequest(noteDoc.getId(), noteDoc.getBody());
-            response.add(newNoteRequest);
+            NoteResponse newNoteResponse = new NoteResponse(noteDoc.getId(), noteDoc.getBody());
+            response.add(newNoteResponse);
         }
         return response;
 
     }
 
+    @Override
+    public NoteResponse getNoteById(String id) {
+        NoteDoc noteDoc = noteRepository.findNoteById(id);
+        return new NoteResponse(noteDoc.getId(), noteDoc.getBody());
+    }
 
+    @Override
+    public void updateNoteById(NoteRequest noteRequest) {
+        NoteDoc existingNote = noteRepository.findById(noteRequest.getId())
+                .map(note -> {
+                    note.setBody(noteRequest.getBody());
+                    return note;
+                })
+                .orElseThrow(() -> new NoteNotFoundException(noteRequest.getId()));
+
+        noteRepository.save(existingNote);
+    }
+
+    @Override
+    public void deleteNoteById(String id) {
+
+    }
 
 }

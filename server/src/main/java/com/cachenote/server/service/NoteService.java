@@ -1,19 +1,19 @@
 package com.cachenote.server.service;
 
+import com.cachenote.server.payload.Reponse.NoteResponse;
 import com.cachenote.server.payload.Request.NoteRequest;
 
 import java.util.List;
 
 public interface NoteService {
-    NoteRequest createNote(NoteRequest noteRequest);
+    NoteResponse createNote(NoteRequest noteRequest);
 
-    List<NoteRequest> getAllNotes();
+    List<NoteResponse> getAllNotes();
 
-//    NoteDto getNoteById(String id);
-//
-//    NoteDto updateNote(String id);
-//
-//    void deletePostById(String id);
+    NoteResponse getNoteById(String id);
 
+    void updateNoteById(NoteRequest noteRequest);
+
+    void deleteNoteById(String id);
 
 }
