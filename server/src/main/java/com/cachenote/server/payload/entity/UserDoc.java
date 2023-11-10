@@ -1,6 +1,6 @@
 package com.cachenote.server.payload.entity;
 
-import com.cachenote.server.security.Role;
+import com.cachenote.server.security.UserRole;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,13 +21,13 @@ public class UserDoc {
     private int id;
     private String username;
     private String password;
-    private Role role;
+    private UserRole userRole;
 
 
-    public UserDoc(String username, String password, Role role) {
+    public UserDoc(String username, String password, UserRole userRole) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.userRole = userRole;
     }
 }
 

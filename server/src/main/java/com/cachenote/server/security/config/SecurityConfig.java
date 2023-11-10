@@ -1,8 +1,9 @@
-package com.cachenote.server.security;
+package com.cachenote.server.security.config;
 
 
 import com.cachenote.server.payload.entity.UserDoc;
 import com.cachenote.server.repository.UserRepository;
+import com.cachenote.server.security.JwtAuthenticationFilter;
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 

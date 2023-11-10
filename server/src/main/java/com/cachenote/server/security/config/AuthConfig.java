@@ -1,8 +1,9 @@
-package com.cachenote.server.security;
+package com.cachenote.server.security.config;
 
 
 import com.cachenote.server.payload.entity.UserDoc;
 import com.cachenote.server.repository.UserRepository;
+import com.cachenote.server.security.UserDetailsAuth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
-public class ApplicationConfig {
+public class AuthConfig {
     private final UserRepository repository;
 
     @Bean
@@ -49,7 +50,7 @@ public class ApplicationConfig {
                 if (userDoc == null) {
                     throw new UsernameNotFoundException("Username not found");
                 }
-                return new MyUserDetails(userDoc);
+                return new UserDetailsAuth(userDoc);
             }
         };
     }

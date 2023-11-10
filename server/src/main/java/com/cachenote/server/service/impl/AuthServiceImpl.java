@@ -8,11 +8,10 @@ import com.cachenote.server.payload.Request.SignupRequest;
 import com.cachenote.server.payload.entity.UserDoc;
 import com.cachenote.server.repository.UserRepository;
 import com.cachenote.server.security.JwtService;
-import com.cachenote.server.security.Role;
-import com.cachenote.server.security.MyUserDetails;
+import com.cachenote.server.security.UserRole;
+import com.cachenote.server.security.UserDetailsAuth;
 import com.cachenote.server.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,11 +36,11 @@ public class AuthServiceImpl implements AuthService {
         UserDoc userDoc = new UserDoc(
                 signupRequest.getUsername(),
                 passwordEncoder.encode(signupRequest.getPassword()),
-                Role.USER_NORMAL);
-        MyUserDetails myUserDetails = new MyUserDetails(userDoc);
+                UserRole.USER_NORMAL);
+        UserDetailsAuth userDetailsAuth = new UserDetailsAuth(userDoc);
         repository.save(userDoc);
 
-        var jwtToken = jwtService.generateToken(myUserDetails);
+        var jwtToken = jwtService.generateToken(userDetailsAuth);
         SignupResponse signupResponse = new SignupResponse();
         signupResponse.setToken(jwtToken);
         return signupResponse;
@@ -58,10 +57,10 @@ public class AuthServiceImpl implements AuthService {
                 )
         );
         UserDoc userDoc = repository.findByUsername(loginRequest.getUsername());
-        MyUserDetails myUserDetails = new MyUserDetails(userDoc);
+        UserDetailsAuth userDetailsAuth = new UserDetailsAuth(userDoc);
         // generate token
         // todo: do we needs to generate token when user login?
-        var jwtToken = jwtService.generateToken(myUserDetails);
+        var jwtToken = jwtService.generateToken(userDetailsAuth);
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtToken);
 
