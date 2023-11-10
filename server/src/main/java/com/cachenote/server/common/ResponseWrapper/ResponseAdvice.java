@@ -14,7 +14,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
+
+    public ResponseAdvice(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {

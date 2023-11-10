@@ -1,66 +1,74 @@
-//package com.cachenote.server.service.impl;
-//
-//
-//import com.cachenote.server.payload.entity.UserDoc;
-//import com.cachenote.server.payload.entity.Request.payload.LoginRequest;
-//import com.cachenote.server.payload.entity.Request.payload.SignupRequest;
-//import com.cachenote.server.payload.TokenDto;
-//import com.cachenote.server.repository.UserRepository;
-//import com.cachenote.server.service.AuthService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.ArrayList;
-//
-//
-//@Service
-//public class AuthServiceImpl implements AuthService {
-//
-//
-//    private PasswordEncoder passwordEncoder;
-//
-//
-//    private UserRepository userRepository;
-//
-//
-//    @Override
-//    public UserDoc signup(SignupRequest signupRequest) throws RuntimeException {
-//        String username = signupRequest.getUsername();
-//        UserDoc user = userRepository.findByUsername(username);
-//        if (user != null) {
-//            throw new RuntimeException("UserDoc exist.");
-//        }
-//
-//        UserDoc newUser = new UserDoc();
-//        newUser.setUsername(signupRequest.getUsername());
-//        newUser.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
-//
-//        return userRepository.save(newUser);
-//
-//
-//    }
-//
-//    @Override
-//    public String login(LoginRequest loginRequest) {
-//        String username = loginRequest.getUsername();
-//        UserDoc user = userRepository.findByUsername(username);
-//        if (user == null) {
-//            throw new RuntimeException("UserDoc not found");
-//        }
-//
-//        String inputPwd = loginRequest.getPassword();
-//        String dbPwd = user.getPassword();
-//
-//        if (!passwordEncoder.matches(inputPwd, dbPwd)) {
-//            throw new RuntimeException("Invalid password");
-//        }
-//
-//        // If the password is valid, generate and return a token or handle the successful login in your preferred way
-//        // For example, you can return a JWT token or a simple success message
-//        return "Login successful";
-//    }
-//}
+package com.cachenote.server.service.impl;
+
+
+import com.cachenote.server.payload.Reponse.LoginResponse;
+import com.cachenote.server.payload.Reponse.SignupResponse;
+import com.cachenote.server.payload.Request.LoginRequest;
+import com.cachenote.server.payload.Request.SignupRequest;
+import com.cachenote.server.payload.entity.UserDoc;
+import com.cachenote.server.repository.UserRepository;
+import com.cachenote.server.security.JwtService;
+import com.cachenote.server.security.Role;
+import com.cachenote.server.security.MyUserDetails;
+import com.cachenote.server.service.AuthService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+
+
+@Service
+@RequiredArgsConstructor
+public class AuthServiceImpl implements AuthService {
+    private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
+
+
+
+    @Override
+    public SignupResponse signup(SignupRequest signupRequest) {
+        // todo: check if the username exist or nor
+
+        UserDoc userDoc = new UserDoc(
+                signupRequest.getUsername(),
+                passwordEncoder.encode(signupRequest.getPassword()),
+                Role.USER_NORMAL);
+        MyUserDetails myUserDetails = new MyUserDetails(userDoc);
+        repository.save(userDoc);
+
+        var jwtToken = jwtService.generateToken(myUserDetails);
+        SignupResponse signupResponse = new SignupResponse();
+        signupResponse.setToken(jwtToken);
+        return signupResponse;
+    }
+
+
+
+    @Override
+    public LoginResponse login(LoginRequest loginRequest) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
+                )
+        );
+        UserDoc userDoc = repository.findByUsername(loginRequest.getUsername());
+        MyUserDetails myUserDetails = new MyUserDetails(userDoc);
+        // generate token
+        // todo: do we needs to generate token when user login?
+        var jwtToken = jwtService.generateToken(myUserDetails);
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setToken(jwtToken);
+
+        return loginResponse;
+
+    }
+
+
+
+}

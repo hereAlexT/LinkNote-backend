@@ -1,15 +1,17 @@
-//package com.cachenote.server.service;
-//
-//
-//import com.cachenote.server.payload.entity.UserDoc;
-//import com.cachenote.server.payload.entity.Request.payload.LoginRequest;
-//import com.cachenote.server.payload.entity.Request.payload.SignupRequest;
-//
-//public interface AuthService {
-//
-//    UserDoc signup(SignupRequest signupRequest);
-//
-//    String login(LoginRequest loginRequest);
-//
-//
-//}
+package com.cachenote.server.service;
+
+
+import com.cachenote.server.payload.Reponse.LoginResponse;
+import com.cachenote.server.payload.Reponse.SignupResponse;
+import com.cachenote.server.payload.Request.LoginRequest;
+import com.cachenote.server.payload.Request.SignupRequest;
+import com.cachenote.server.payload.entity.UserDoc;
+
+public interface AuthService {
+
+    SignupResponse signup(SignupRequest signupRequest);
+
+    LoginResponse login(LoginRequest loginRequest);
+
+
+}

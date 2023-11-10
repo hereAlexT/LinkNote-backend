@@ -1,15 +1,11 @@
 package com.cachenote.server.payload.Reponse;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class LoginResponse {
+public class SignupResponse {
     private String token;
 
 
