@@ -2,7 +2,7 @@ package com.cachenote.server.service.impl;
 
 import com.cachenote.server.common.exception.NoteNotFoundException;
 import com.cachenote.server.payload.Reponse.NoteResponse;
-import com.cachenote.server.payload.entity.NoteDoc;
+import com.cachenote.server.payload.entity.Note;
 import com.cachenote.server.payload.Request.NoteRequest;
 import com.cachenote.server.service.NoteService;
 import org.springframework.stereotype.Service;
@@ -31,27 +31,27 @@ public class NoteServiceImpl implements NoteService {
     public NoteResponse createNote(NoteRequest noteRequest) {
 
         //convert DTO to entity
-        NoteDoc noteDoc = new NoteDoc();
-        noteDoc.setBody(noteRequest.getBody());
-        NoteDoc newNoteDoc = noteRepository.save(noteDoc);
+        Note note = new Note();
+        note.setBody(noteRequest.getBody());
+        Note newNote = noteRepository.save(note);
 
-        logger.debug("Created NoteDoc: {}", newNoteDoc.toString());
+        logger.debug("Created Note: {}", newNote.toString());
 
         //convert entity to DTO
         NoteResponse newResponse = new NoteResponse();
-        newResponse.setId(newNoteDoc.getId());
-        newResponse.setBody(newNoteDoc.getBody());
+        newResponse.setId(newNote.getId());
+        newResponse.setBody(newNote.getBody());
         return newResponse;
     }
 
     @Override
     public List<NoteResponse> getAllNotes() {
-        List<NoteDoc> noteDocs = noteRepository.findAll();
+        List<Note> notes = noteRepository.findAll();
 
 
         List<NoteResponse> response = new ArrayList<>();
-        for (NoteDoc noteDoc : noteDocs) {
-            NoteResponse newNoteResponse = new NoteResponse(noteDoc.getId(), noteDoc.getBody());
+        for (Note note : notes) {
+            NoteResponse newNoteResponse = new NoteResponse(note.getId(), note.getBody());
             response.add(newNoteResponse);
         }
         return response;
@@ -59,16 +59,16 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public NoteResponse getNoteById(String id) {
-        NoteDoc noteDoc = noteRepository.findById(id)
+    public NoteResponse getNoteById(Long id) {
+        Note note = noteRepository.findById(id)
                 .orElseThrow(() -> new NoteNotFoundException(id));
 
-        return new NoteResponse(noteDoc.getId(), noteDoc.getBody());
+        return new NoteResponse(note.getId(), note.getBody());
     }
 
     @Override
     public void updateNoteById(NoteRequest noteRequest) {
-        NoteDoc existingNote = noteRepository.findById(noteRequest.getId())
+        Note existingNote = noteRepository.findById(noteRequest.getId())
                 .map(note -> {
                     note.setBody(noteRequest.getBody());
                     return note;

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NoteRequest {
-    private String id;
+    private Long id;
     private String body;
 
 }

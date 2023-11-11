@@ -5,7 +5,7 @@ import com.cachenote.server.payload.Reponse.LoginResponse;
 import com.cachenote.server.payload.Reponse.SignupResponse;
 import com.cachenote.server.payload.Request.LoginRequest;
 import com.cachenote.server.payload.Request.SignupRequest;
-import com.cachenote.server.payload.entity.UserDoc;
+import com.cachenote.server.payload.entity.User;
 import com.cachenote.server.repository.UserRepository;
 import com.cachenote.server.security.JwtService;
 import com.cachenote.server.security.UserRole;
@@ -33,12 +33,12 @@ public class AuthServiceImpl implements AuthService {
     public SignupResponse signup(SignupRequest signupRequest) {
         // todo: check if the username exist or nor
 
-        UserDoc userDoc = new UserDoc(
+        User user = new User(
                 signupRequest.getUsername(),
                 passwordEncoder.encode(signupRequest.getPassword()),
                 UserRole.USER_NORMAL);
-        UserDetailsAuth userDetailsAuth = new UserDetailsAuth(userDoc);
-        repository.save(userDoc);
+        UserDetailsAuth userDetailsAuth = new UserDetailsAuth(user);
+        repository.save(user);
 
         var jwtToken = jwtService.generateToken(userDetailsAuth);
         SignupResponse signupResponse = new SignupResponse();
@@ -56,8 +56,8 @@ public class AuthServiceImpl implements AuthService {
                         loginRequest.getPassword()
                 )
         );
-        UserDoc userDoc = repository.findByUsername(loginRequest.getUsername());
-        UserDetailsAuth userDetailsAuth = new UserDetailsAuth(userDoc);
+        User user = repository.findByUsername(loginRequest.getUsername());
+        UserDetailsAuth userDetailsAuth = new UserDetailsAuth(user);
         // generate token
         // todo: do we needs to generate token when user login?
         var jwtToken = jwtService.generateToken(userDetailsAuth);
