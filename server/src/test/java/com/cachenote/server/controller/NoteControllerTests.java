@@ -2,6 +2,7 @@ package com.cachenote.server.controller;
 
 
 import com.cachenote.server.common.GlobalExceptionHandler;
+import com.cachenote.server.config.WebConfig;
 import com.cachenote.server.payload.Request.NoteRequest;
 
 import com.cachenote.server.service.NoteService;
@@ -11,8 +12,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -29,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Random;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -49,6 +54,9 @@ public class NoteControllerTests {
     @Autowired
     private NoteService noteService;
 
+    @Autowired
+    private List<HttpMessageConverter<?>> messageConverters;
+
     /**************************/
 
     private MockMvc mockMvc;
@@ -59,6 +67,7 @@ public class NoteControllerTests {
     public void setup() {
         initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(noteController).setControllerAdvice(GlobalExceptionHandler.class).build();
+
     }
 
     @Test
@@ -80,7 +89,8 @@ public class NoteControllerTests {
 
         // get the note to see whether it is correctly created.
         String response = result.getResponse().getContentAsString();
-        String id = JsonPath.parse(response).read("$.id");
+        System.out.println(response);
+        Long id = JsonPath.parse(response).read("$.id");
 
         // perform another request to getNoteById
         mockMvc.perform(get(notePrefix + "/" + id)
@@ -116,10 +126,10 @@ public class NoteControllerTests {
 
             // get the note to see whether it is correctly created.
             String response = result.getResponse().getContentAsString();
-            String id = JsonPath.parse(response).read("$.id");
-
-            createdNoteIds.add(id);
+            Long id = JsonPath.parse(response).read("$.id");
+            createdNoteIds.add(id.toString());
             createdNoteBodies.add(randomBody);
+            System.out.println("body " + randomBody + " id " + id );
         }
 
         // perform another request to getAllNotes
@@ -131,16 +141,18 @@ public class NoteControllerTests {
 
         String getAllNotesResponse = getAllNotesResult.getResponse().getContentAsString();
         List<Map<String, Object>> allNotes = JsonPath.parse(getAllNotesResponse).read("$");
-
         // check if the created notes exist in the returned list
         for (int i = 0; i < createdNoteIds.size(); i++) {
             String id = createdNoteIds.get(i);
             String body = createdNoteBodies.get(i);
-
+            System.out.println(body);
             boolean noteExists = allNotes.stream().anyMatch(note ->
-                    id.equals(note.get("id")) && body.equals(note.get("body"))
+                    id.equals(note.get("id").toString()) && body.equals(note.get("body"))
             );
-
+            // If the note does not exist, print the id and body
+            if (!noteExists) {
+                System.out.println("No matching note found for ID: " + id + " with body: " + body);
+            }
             assertTrue("Note with id " + id + " and body " + body + " should exist in the returned list", noteExists);
         }
     }
@@ -161,7 +173,7 @@ public class NoteControllerTests {
                 .andReturn();
 
         String response = result.getResponse().getContentAsString();
-        String id = JsonPath.parse(response).read("$.id");
+        Long id = JsonPath.parse(response).read("$.id");
 
         // Update the note
         NoteRequest updateRequest = new NoteRequest();
@@ -191,7 +203,7 @@ public class NoteControllerTests {
                 .andReturn();
 
         String response = result.getResponse().getContentAsString();
-        String id = JsonPath.parse(response).read("$.id");
+        Long id = JsonPath.parse(response).read("$.id");
 
         // Delete the note
         mockMvc.perform(delete(notePrefix + "/" + id))
@@ -202,7 +214,7 @@ public class NoteControllerTests {
     public void shouldNotUpdateNonExistingNote() throws Exception {
         // Try to update a note that doesn't exist
         NoteRequest updateRequest = new NoteRequest();
-        String nonExistingId = UUID.randomUUID().toString();
+        Long nonExistingId = new Random().nextLong();
         updateRequest.setId(nonExistingId);
         updateRequest.setBody("Updated body");
 
@@ -218,7 +230,7 @@ public class NoteControllerTests {
     @Test
     public void shouldNotGetNonExistingNote() throws Exception {
         // Try to get a note that doesn't exist
-        String nonExistingId = UUID.randomUUID().toString();
+        String nonExistingId = "2131daADSA";
 
         mockMvc.perform(get(notePrefix + "/" + nonExistingId)
                         .contentType(MediaType.APPLICATION_JSON))
