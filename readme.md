@@ -23,5 +23,7 @@ All table and filed name in database should be lower case.
 
 #### Git management
 
+- Contribute in branch, main is for prod only.
 ![Git Model](attachement/git-model.png)
 Reference: [A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model/)
+
