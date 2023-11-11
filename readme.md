@@ -20,3 +20,8 @@ All table and filed name in database should be lower case.
 
 #### Naming
 - All database column name keep lower keys or use underscore to connect.
+
+#### Git management
+
+![Git Model](attachement/git-model.png)
+Reference: [A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model/)
