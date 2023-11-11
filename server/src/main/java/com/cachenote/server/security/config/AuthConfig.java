@@ -1,7 +1,7 @@
 package com.cachenote.server.security.config;
 
 
-import com.cachenote.server.payload.entity.UserDoc;
+import com.cachenote.server.payload.entity.User;
 import com.cachenote.server.repository.UserRepository;
 import com.cachenote.server.security.UserDetailsAuth;
 import lombok.RequiredArgsConstructor;
@@ -46,11 +46,11 @@ public class AuthConfig {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                UserDoc userDoc = repository.findByUsername(username);
-                if (userDoc == null) {
+                User user = repository.findByUsername(username);
+                if (user == null) {
                     throw new UsernameNotFoundException("Username not found");
                 }
-                return new UserDetailsAuth(userDoc);
+                return new UserDetailsAuth(user);
             }
         };
     }

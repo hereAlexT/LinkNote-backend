@@ -1,16 +1,18 @@
 package com.cachenote.server.repository;
 
 
-import com.cachenote.server.payload.entity.UserDoc;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
-import org.springframework.stereotype.Repository;
+import com.cachenote.server.payload.entity.User;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 
 
-@Repository
-public interface UserRepository extends MongoRepository<UserDoc, String>
-{
-    @Query("{username: '?0'}")
-    public UserDoc findByUsername(String username);
+
+public interface UserRepository extends JpaRepository<User, Long> {
+
+
+    //todo: set to Optional<User> findByUsername(String username);
+    User findByUsername(String username);
+
+
 }

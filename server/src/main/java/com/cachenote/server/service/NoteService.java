@@ -10,7 +10,7 @@ public interface NoteService {
 
     List<NoteResponse> getAllNotes();
 
-    NoteResponse getNoteById(String id);
+    NoteResponse getNoteById(Long id);
 
     void updateNoteById(NoteRequest noteRequest);
 

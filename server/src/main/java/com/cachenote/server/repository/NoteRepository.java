@@ -1,16 +1,10 @@
 package com.cachenote.server.repository;
 
 
-import com.cachenote.server.payload.entity.NoteDoc;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
+import com.cachenote.server.payload.entity.Note;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 
-public interface NoteRepository extends MongoRepository<NoteDoc, String> {
-
-
-    @Query("{_id: '?0'}")
-    public NoteDoc findNoteById(String id);
-
-
+public interface NoteRepository extends JpaRepository<Note, Long> {
 }

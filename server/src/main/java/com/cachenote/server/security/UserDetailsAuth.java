@@ -1,6 +1,6 @@
 package com.cachenote.server.security;
 
-import com.cachenote.server.payload.entity.UserDoc;
+import com.cachenote.server.payload.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 public class UserDetailsAuth implements UserDetails {
 
-    private  UserDoc user;
+    private User user;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(user.getUserRole().name()));
