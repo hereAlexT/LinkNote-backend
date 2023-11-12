@@ -1,17 +1,24 @@
 package com.cachenote.server.service.impl;
 
+import com.cachenote.server.common.exception.NoteAccessDeniedException;
 import com.cachenote.server.common.exception.NoteNotFoundException;
 import com.cachenote.server.payload.Reponse.NoteResponse;
 import com.cachenote.server.payload.entity.Note;
 import com.cachenote.server.payload.Request.NoteRequest;
+import com.cachenote.server.payload.entity.User;
+import com.cachenote.server.repository.UserRepository;
+import com.cachenote.server.security.UserDetailsAuth;
 import com.cachenote.server.service.NoteService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.cachenote.server.repository.NoteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -21,18 +28,31 @@ public class NoteServiceImpl implements NoteService {
 
 
     private NoteRepository noteRepository;
+    private UserRepository userRepository;
 
-    public NoteServiceImpl(NoteRepository noteRepository) {
+    public NoteServiceImpl(NoteRepository noteRepository, UserRepository userRepository) {
         this.noteRepository = noteRepository;
+        this.userRepository = userRepository;
     }
 
 
     @Override
     public NoteResponse createNote(NoteRequest noteRequest) {
 
+        UserDetailsAuth userDetails = (UserDetailsAuth)SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Long userId = userDetails.getIdLong();
+
+        // Create a reference to the User - no database call is made here
+        User userReference = userRepository.getReferenceById(userId);
+
         //convert DTO to entity
         Note note = new Note();
         note.setBody(noteRequest.getBody());
+        note.setUser(userReference);
         Note newNote = noteRepository.save(note);
 
         logger.debug("Created Note: {}", newNote.toString());
@@ -46,8 +66,13 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<NoteResponse> getAllNotes() {
-        List<Note> notes = noteRepository.findAll();
+        UserDetailsAuth userDetails = (UserDetailsAuth)SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
 
+        Long userId = userDetails.getIdLong();
+        List<Note> notes = noteRepository.findAllNotesByUserId(userId); // Pass the list to the method
 
         List<NoteResponse> response = new ArrayList<>();
         for (Note note : notes) {
@@ -55,32 +80,53 @@ public class NoteServiceImpl implements NoteService {
             response.add(newNoteResponse);
         }
         return response;
-
     }
+
+
 
     @Override
     public NoteResponse getNoteById(Long id) {
+        UserDetailsAuth userDetails = (UserDetailsAuth) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Long userId = userDetails.getIdLong();
         Note note = noteRepository.findById(id)
                 .orElseThrow(() -> new NoteNotFoundException(id));
+
+        // Check if the authenticated user is the owner of the note
+        if (!note.getUser().getId().equals(userId)) {
+            throw new NoteAccessDeniedException(id);
+        }
 
         return new NoteResponse(note.getId(), note.getBody());
     }
 
     @Override
     public void updateNoteById(NoteRequest noteRequest) {
+        UserDetailsAuth userDetails = (UserDetailsAuth) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Long userId = userDetails.getIdLong();
+
         Note existingNote = noteRepository.findById(noteRequest.getId())
-                .map(note -> {
-                    note.setBody(noteRequest.getBody());
-                    return note;
-                })
                 .orElseThrow(() -> new NoteNotFoundException(noteRequest.getId()));
 
+        // Check if the authenticated user is the owner of the note
+        if (!existingNote.getUser().getId().equals(userId)) {
+            throw new NoteAccessDeniedException(noteRequest.getId());
+        }
+
+        existingNote.setBody(noteRequest.getBody());
         noteRepository.save(existingNote);
     }
 
     @Override
     public void deleteNoteById(String id) {
-
+        //todo: delete note by id
     }
 
 }

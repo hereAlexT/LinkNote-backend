@@ -30,7 +30,12 @@ public class UserDetailsAuth implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getId().toString();
+        return user.getUsername();
+//        return user.getId().toString();
+    }
+
+    public Long getIdLong() {
+        return user.getId();
     }
 
     @Override

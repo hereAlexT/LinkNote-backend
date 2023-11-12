@@ -4,6 +4,7 @@ package com.cachenote.server.security.config;
 import com.cachenote.server.payload.entity.User;
 import com.cachenote.server.repository.UserRepository;
 import com.cachenote.server.security.UserDetailsAuth;
+import com.cachenote.server.service.impl.NoteServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +17,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Configuration
 @RequiredArgsConstructor
 public class AuthConfig {
+    private static final Logger logger = LoggerFactory.getLogger(AuthConfig.class);
     private final UserRepository repository;
 
     @Bean

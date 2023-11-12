@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Set;
+
 
 // Add the missing Entity annotation
 @Entity
@@ -17,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "app_user") // It's a good practice to use lowercase for table names
+@Table(name = "appuser") // It's a good practice to use lowercase for table names
 public class User {
 
     @Id
@@ -38,6 +40,9 @@ public class User {
     @Enumerated(EnumType.STRING) // This is needed if UserRole is an Enum
     @Column(name="role")
     private UserRole userRole = UserRole.USER_NORMAL;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Note> notes;
 
     public User(String username, String password, UserRole userRole) {
         this.username = username;
