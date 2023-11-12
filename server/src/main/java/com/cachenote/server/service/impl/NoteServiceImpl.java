@@ -39,7 +39,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public NoteResponse createNote(NoteRequest noteRequest) {
 
-        UserDetailsAuth userDetails = (UserDetailsAuth)SecurityContextHolder
+        UserDetailsAuth userDetails = (UserDetailsAuth) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
@@ -66,7 +66,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<NoteResponse> getAllNotes() {
-        UserDetailsAuth userDetails = (UserDetailsAuth)SecurityContextHolder
+        UserDetailsAuth userDetails = (UserDetailsAuth) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
@@ -83,7 +83,6 @@ public class NoteServiceImpl implements NoteService {
     }
 
 
-
     @Override
     public NoteResponse getNoteById(Long id) {
         UserDetailsAuth userDetails = (UserDetailsAuth) SecurityContextHolder
@@ -93,11 +92,11 @@ public class NoteServiceImpl implements NoteService {
 
         Long userId = userDetails.getIdLong();
         Note note = noteRepository.findById(id)
-                .orElseThrow(() -> new NoteNotFoundException(id));
+                .orElseThrow(() -> new NoteNotFoundException(id, null));
 
         // Check if the authenticated user is the owner of the note
         if (!note.getUser().getId().equals(userId)) {
-            throw new NoteAccessDeniedException(id);
+            throw new NoteAccessDeniedException(userId, id, null);
         }
 
         return new NoteResponse(note.getId(), note.getBody());
@@ -113,11 +112,11 @@ public class NoteServiceImpl implements NoteService {
         Long userId = userDetails.getIdLong();
 
         Note existingNote = noteRepository.findById(noteRequest.getId())
-                .orElseThrow(() -> new NoteNotFoundException(noteRequest.getId()));
+                .orElseThrow(() -> new NoteNotFoundException(noteRequest.getId(), null));
 
         // Check if the authenticated user is the owner of the note
         if (!existingNote.getUser().getId().equals(userId)) {
-            throw new NoteAccessDeniedException(noteRequest.getId());
+            throw new NoteAccessDeniedException(userId, noteRequest.getId(), null);
         }
 
         existingNote.setBody(noteRequest.getBody());

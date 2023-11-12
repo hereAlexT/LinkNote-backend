@@ -1,8 +1,9 @@
 package com.cachenote.server.common.exception;
 
 public class NoteNotFoundException extends RuntimeException {
-    public NoteNotFoundException(Long id) {
-        super("Note not found or you do not have permission to access it.");
+    public NoteNotFoundException(Long noteId, String message) {
+        super("Note " + noteId + " not found." +
+                (message != null ? ". Message: " + message : "") + ".");
     }
 }
 
