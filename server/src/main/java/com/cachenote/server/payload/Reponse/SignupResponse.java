@@ -5,7 +5,7 @@ import lombok.Data;
 
 
 @Data
-public class SignupResponse {
+public class SignupResponse implements ValidResponse{
     private String token;
 
 

@@ -31,6 +31,10 @@ public class Note {
     @Column(name="body")
     private String body;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
+
 //    @Column(name="cre_dt")
 //    private LocalDateTime createdAt;
 //
