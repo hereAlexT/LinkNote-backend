@@ -39,7 +39,7 @@ public class User {
     // Assuming UserRole is an Enum and is correctly set up with JPA annotations
     @Enumerated(EnumType.STRING) // This is needed if UserRole is an Enum
     @Column(name="role")
-    private UserRole userRole = UserRole.USER_NORMAL;
+    private UserRole userRole = UserRole.ROLE_USER_REGISTERED;
 
     @OneToMany(mappedBy = "user")
     private Set<Note> notes;
