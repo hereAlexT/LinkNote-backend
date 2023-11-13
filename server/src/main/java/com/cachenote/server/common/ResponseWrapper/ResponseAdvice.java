@@ -1,5 +1,6 @@
 package com.cachenote.server.common.ResponseWrapper;
 
+import com.cachenote.server.common.error.StatusCode;
 import lombok.SneakyThrows;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -30,11 +31,11 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         if(o instanceof String){
-            return objectMapper.writeValueAsString(OkWrapper.Result(o));
+            return objectMapper.writeValueAsString(OkWrapper.Result(StatusCode.OK.getCode(), "Ok", o));
         }
-        if(o instanceof ReceptionWrapper){
+        if(o instanceof ExceptionWrapper){
             return o;
         }
-        return OkWrapper.Result(o);
+        return OkWrapper.Result(StatusCode.OK.getCode(), "Ok", o);
     }
 }
