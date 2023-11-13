@@ -2,6 +2,7 @@ package com.cachenote.server.common;
 
 
 import com.cachenote.server.common.ResponseWrapper.ReceptionWrapper;
+import com.cachenote.server.common.exception.BadUsernamePasswordException;
 import com.cachenote.server.common.exception.NoteAccessDeniedException;
 import com.cachenote.server.common.exception.NoteNotFoundException;
 import org.slf4j.Logger;
@@ -29,6 +30,14 @@ public class GlobalExceptionHandler {
         logger.debug(e.getMessage());
         return new ReceptionWrapper<>("Note not exist or you are not authorized to the note.");
     }
+
+    @ExceptionHandler(BadUsernamePasswordException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ReceptionWrapper<String> handleBadUsernamePasswordException(BadUsernamePasswordException e) {
+        logger.debug(e.getMessage());
+        return new ReceptionWrapper<>(e.getMessage());
+    }
+
 
 
 }

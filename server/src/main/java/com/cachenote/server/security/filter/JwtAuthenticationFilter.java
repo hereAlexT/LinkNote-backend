@@ -39,8 +39,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String username;
         //If there is no token in header, do next filter.
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
+            // Return a custom error response
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType("application/json");
+            String jsonResponse = "{\"error\":\"Unauthorized\", \"message\":\"No Bearer token provided.\"}";
+            response.getWriter().write(jsonResponse);
+            return; // Stop filter execution and return the response
         }
         // else, check the token.
         try {
@@ -81,6 +85,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return request.getServletPath().equals("/api/v1/auth");
+        String path = request.getServletPath();
+        return path.matches("/api/v1/auth/.*"); // Use regex to match any path under /api/v1/auth/
     }
 }

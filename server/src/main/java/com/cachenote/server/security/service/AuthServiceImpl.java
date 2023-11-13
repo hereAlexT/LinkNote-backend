@@ -1,18 +1,20 @@
-package com.cachenote.server.service.impl;
+package com.cachenote.server.security.service;
 
 
+import com.cachenote.server.common.exception.BadUsernamePasswordException;
+import com.cachenote.server.payload.Reponse.BadCredentialsResponse;
 import com.cachenote.server.payload.Reponse.LoginResponse;
 import com.cachenote.server.payload.Reponse.SignupResponse;
+import com.cachenote.server.payload.Reponse.ValidResponse;
 import com.cachenote.server.payload.Request.LoginRequest;
 import com.cachenote.server.payload.Request.SignupRequest;
 import com.cachenote.server.payload.entity.User;
 import com.cachenote.server.repository.UserRepository;
-import com.cachenote.server.security.service.JwtService;
 import com.cachenote.server.security.UserRole;
 import com.cachenote.server.security.entity.UserDetailsImpl;
-import com.cachenote.server.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,13 +51,19 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public LoginResponse login(LoginRequest loginRequest) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
+    public ValidResponse login(LoginRequest loginRequest) {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException e) {
+//            return new BadCredentialsResponse("Wrong username or password.");
+            throw new BadUsernamePasswordException("Wrong username or password.");
+        }
+
         User user = repository.findByUsername(loginRequest.getUsername());
         UserDetailsImpl userDetailsImpl = new UserDetailsImpl(user);
         // generate token
