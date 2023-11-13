@@ -1,5 +1,6 @@
 package com.cachenote.server.security.filter;
 
+import com.cachenote.server.common.exception.TokenNotProvidedException;
 import com.cachenote.server.security.service.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -39,48 +40,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String username;
         //If there is no token in header, do next filter.
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            // Return a custom error response
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.setContentType("application/json");
-            String jsonResponse = "{\"error\":\"Unauthorized\", \"message\":\"No Bearer token provided.\"}";
-            response.getWriter().write(jsonResponse);
-            return; // Stop filter execution and return the response
+            throw new TokenNotProvidedException(null);
         }
         // else, check the token.
-        try {
-            jwt = authHeader.substring(7);
-            username = jwtService.extractUsername(jwt);
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                //todo: should grad userDetails from Redis rather than postgres
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-                if (jwtService.isTokenValid(jwt, userDetails)) {
-                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            userDetails.getAuthorities()
-                    );
+        jwt = authHeader.substring(7);
+        username = jwtService.extractUsername(jwt);
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            //todo: should grad userDetails from Redis rather than postgres
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            if (jwtService.isTokenValid(jwt, userDetails)) {
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities()
+                );
 
-                    authToken.setDetails(
-                            new WebAuthenticationDetailsSource().buildDetails(request)
-                    );
+                authToken.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request)
+                );
 
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
-                }
+                SecurityContextHolder.getContext().setAuthentication(authToken);
             }
-            filterChain.doFilter(request, response);
-
-        } catch (ExpiredJwtException e) {
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            // Set the content type to JSON
-            response.setContentType("application/json");
-            // Create a JSON object for the response body
-            String jsonResponse = String.format(
-                    "{\"message\":\"%s\", \"data\":null}",
-                    e.getMessage().replace("\"", "\\\"") // Escape any quotes in the message
-            );
-            // Write the JSON response
-            response.getWriter().write(jsonResponse);
         }
+        filterChain.doFilter(request, response);
+
     }
 
     @Override

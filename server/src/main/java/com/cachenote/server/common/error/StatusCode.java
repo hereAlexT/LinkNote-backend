@@ -17,6 +17,7 @@ public enum StatusCode {
     BAD_NOTE_REQUEST(600, "Note not exist or unauthorized visit"),
     EXPIRED_JWT_TOKEN(601, "Expired JWT Token"),
     INVALID_JWT_TOKEN(602, "Invalid JWT Token"),
+    NO_JWT_TOKEN(603, "No JWT Token Provided"),
 
     /**
      * Un-authorized endpoints visit.

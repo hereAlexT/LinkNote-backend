@@ -1,6 +1,7 @@
 package com.cachenote.server.security.config;
 
 
+import com.cachenote.server.security.filter.ExceptionHandlerFilter;
 import com.cachenote.server.security.filter.JwtAuthenticationFilter;
 import com.cachenote.server.security.service.UserDetailsServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.session.DisableEncodeUrlFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -31,6 +33,7 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
 
 
     @Bean
@@ -60,7 +63,8 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // do not store any state
 
                 .and().authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(exceptionHandlerFilter, DisableEncodeUrlFilter.class);
 
         return http.build();
     }
