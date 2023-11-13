@@ -1,4 +1,4 @@
-package com.cachenote.server.controller;
+package com.cachenote.server.security.controller;
 
 
 import com.cachenote.server.payload.Reponse.LoginResponse;

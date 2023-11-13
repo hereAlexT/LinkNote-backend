@@ -7,9 +7,9 @@ import com.cachenote.server.payload.Request.LoginRequest;
 import com.cachenote.server.payload.Request.SignupRequest;
 import com.cachenote.server.payload.entity.User;
 import com.cachenote.server.repository.UserRepository;
-import com.cachenote.server.security.JwtService;
+import com.cachenote.server.security.service.JwtService;
 import com.cachenote.server.security.UserRole;
-import com.cachenote.server.security.UserDetailsAuth;
+import com.cachenote.server.security.entity.UserDetailsImpl;
 import com.cachenote.server.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,10 +37,10 @@ public class AuthServiceImpl implements AuthService {
                 signupRequest.getUsername(),
                 passwordEncoder.encode(signupRequest.getPassword()),
                 UserRole.USER_NORMAL);
-        UserDetailsAuth userDetailsAuth = new UserDetailsAuth(user);
+        UserDetailsImpl userDetailsImpl = new UserDetailsImpl(user);
         repository.save(user);
 
-        var jwtToken = jwtService.generateToken(userDetailsAuth);
+        var jwtToken = jwtService.generateToken(userDetailsImpl);
         SignupResponse signupResponse = new SignupResponse();
         signupResponse.setToken(jwtToken);
         return signupResponse;
@@ -57,10 +57,10 @@ public class AuthServiceImpl implements AuthService {
                 )
         );
         User user = repository.findByUsername(loginRequest.getUsername());
-        UserDetailsAuth userDetailsAuth = new UserDetailsAuth(user);
+        UserDetailsImpl userDetailsImpl = new UserDetailsImpl(user);
         // generate token
         // todo: do we needs to generate token when user login?
-        var jwtToken = jwtService.generateToken(userDetailsAuth);
+        var jwtToken = jwtService.generateToken(userDetailsImpl);
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtToken);
 

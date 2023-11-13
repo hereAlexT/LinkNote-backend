@@ -1,4 +1,4 @@
-package com.cachenote.server.security;
+package com.cachenote.server.security.entity;
 
 import com.cachenote.server.payload.entity.User;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserDetailsAuth implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     private User user;
     @Override
@@ -30,6 +30,7 @@ public class UserDetailsAuth implements UserDetails {
 
     @Override
     public String getUsername() {
+        //todo: user id
         return user.getUsername();
 //        return user.getId().toString();
     }
@@ -37,6 +38,7 @@ public class UserDetailsAuth implements UserDetails {
     public Long getIdLong() {
         return user.getId();
     }
+
 
     @Override
     public boolean isAccountNonExpired() {

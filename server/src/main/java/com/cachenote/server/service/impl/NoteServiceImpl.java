@@ -7,7 +7,7 @@ import com.cachenote.server.payload.entity.Note;
 import com.cachenote.server.payload.Request.NoteRequest;
 import com.cachenote.server.payload.entity.User;
 import com.cachenote.server.repository.UserRepository;
-import com.cachenote.server.security.UserDetailsAuth;
+import com.cachenote.server.security.entity.UserDetailsImpl;
 import com.cachenote.server.service.NoteService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -16,9 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -39,7 +37,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public NoteResponse createNote(NoteRequest noteRequest) {
 
-        UserDetailsAuth userDetails = (UserDetailsAuth) SecurityContextHolder
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
@@ -66,7 +64,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<NoteResponse> getAllNotes() {
-        UserDetailsAuth userDetails = (UserDetailsAuth) SecurityContextHolder
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
@@ -85,7 +83,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public NoteResponse getNoteById(Long id) {
-        UserDetailsAuth userDetails = (UserDetailsAuth) SecurityContextHolder
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
@@ -104,7 +102,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public void updateNoteById(NoteRequest noteRequest) {
-        UserDetailsAuth userDetails = (UserDetailsAuth) SecurityContextHolder
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
