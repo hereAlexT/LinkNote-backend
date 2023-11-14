@@ -4,16 +4,16 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
 
-public class SnowflakeGenerator implements IdentifierGenerator{
-    private final Snowflake snowflake;
+public class SnowflakeIdGenerator implements IdentifierGenerator{
+    private final SnowflakeId snowflakeID;
 
-    public SnowflakeGenerator(Snowflake snowflake) {
-        this.snowflake = snowflake;
+    public SnowflakeIdGenerator(SnowflakeId snowflakeID) {
+        this.snowflakeID = snowflakeID;
     }
 
 
     @Override
     public Object generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o) {
-        return snowflake.nextId();
+        return snowflakeID.nextId();
     }
 }

@@ -1,12 +1,10 @@
 package com.cachenote.server.payload.entity;
 
 
-import com.cachenote.server.utils.SnowflakeGenerator;
+import com.cachenote.server.utils.SnowflakeIdGenerator;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-
-import java.time.LocalDateTime;
 
 
 @AllArgsConstructor
@@ -20,7 +18,7 @@ public class Note {
 
 
     @Id
-    @GenericGenerator(name = "SNOWFLAKE", type = SnowflakeGenerator.class)
+    @GenericGenerator(name = "SNOWFLAKE", type = SnowflakeIdGenerator.class)
     @GeneratedValue(
             generator = "SNOWFLAKE"
     )

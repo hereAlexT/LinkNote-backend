@@ -2,7 +2,7 @@ package com.cachenote.server.payload.entity;
 
 import com.cachenote.server.security.UserRole;
 
-import com.cachenote.server.utils.SnowflakeGenerator;
+import com.cachenote.server.utils.SnowflakeIdGenerator;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +23,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GenericGenerator(name = "SNOWFLAKE", type = SnowflakeGenerator.class)
+    @GenericGenerator(name = "SNOWFLAKE", type = SnowflakeIdGenerator.class)
     @GeneratedValue(
             generator = "SNOWFLAKE"
     )

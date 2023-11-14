@@ -8,7 +8,7 @@ package com.cachenote.server.utils;
  * @date 2016/11/26
  */
 
-public class Snowflake {
+public class SnowflakeId {
 
     /**
      * 起始的时间戳
@@ -41,7 +41,7 @@ public class Snowflake {
     private long sequence = 0L; //序列号
     private long lastStmp = -1L;//上一次时间戳
 
-    public Snowflake(long datacenterId, long machineId) {
+    public SnowflakeId(long datacenterId, long machineId) {
         if (datacenterId > MAX_DATACENTER_NUM || datacenterId < 0) {
             throw new IllegalArgumentException("datacenterId can't be greater than MAX_DATACENTER_NUM or less than 0");
         }
@@ -96,7 +96,7 @@ public class Snowflake {
     }
 
     public static void main(String[] args) {
-        Snowflake snowFlake = new Snowflake(2, 3);
+        SnowflakeId snowFlake = new SnowflakeId(2, 3);
 
         for (int i = 0; i < (1 << 12); i++) {
             System.out.println(snowFlake.nextId());
