@@ -9,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 
 
 @AllArgsConstructor
@@ -18,9 +18,14 @@ import java.util.List;
 public class UserDetailsImpl implements UserDetails {
 
     private User user;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(user.getUserRole().name()));
+        // Assuming that the 'name' field in the 'Role' class is correctly typed as 'UserRole'
+        // and that 'UserRole' is an enum
+        return user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name())) // Use 'getName()' to get the enum and 'name()' to get the String representation
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -30,12 +35,10 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        //todo: user id
-        return user.getUsername();
-//        return user.getId().toString();
+        return user.getEmail(); // Assuming email is used as the username
     }
 
-    public Long getIdLong() {
+    public Long getId() {
         return user.getId();
     }
 

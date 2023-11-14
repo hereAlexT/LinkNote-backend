@@ -2,15 +2,16 @@ package com.cachenote.server.security.service;
 
 
 import com.cachenote.server.common.exception.BadUsernamePasswordException;
-import com.cachenote.server.payload.Reponse.BadCredentialsResponse;
 import com.cachenote.server.payload.Reponse.LoginResponse;
 import com.cachenote.server.payload.Reponse.SignupResponse;
 import com.cachenote.server.payload.Reponse.ValidResponse;
 import com.cachenote.server.payload.Request.LoginRequest;
 import com.cachenote.server.payload.Request.SignupRequest;
+import com.cachenote.server.payload.entity.Role;
 import com.cachenote.server.payload.entity.User;
+import com.cachenote.server.repository.RoleRepository;
 import com.cachenote.server.repository.UserRepository;
-import com.cachenote.server.security.UserRole;
+import com.cachenote.server.payload.entity.UserRole;
 import com.cachenote.server.security.entity.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,15 +20,20 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final UserRepository repository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+
 
 
 
@@ -38,7 +44,14 @@ public class AuthServiceImpl implements AuthService {
         User user = new User(
                 signupRequest.getUsername(),
                 passwordEncoder.encode(signupRequest.getPassword()),
-                UserRole.ROLE_USER_REGISTERED);
+                Collections.singleton(UserRole.ROLE_USER_REGISTERED));
+        Set<Role> roles =user.getRoles().stream()
+                .map(roleEnum -> roleRepository.findByName(roleEnum.getName())
+                        .orElseThrow(() -> new RuntimeException("Role not found: " + roleEnum.getName())))
+                .collect(Collectors.toSet());
+
+        user.setRoles(roles);
+
         UserDetailsImpl userDetailsImpl = new UserDetailsImpl(user);
         repository.save(user);
 
@@ -64,7 +77,7 @@ public class AuthServiceImpl implements AuthService {
             throw new BadUsernamePasswordException("Wrong username or password.");
         }
 
-        User user = repository.findByUsername(loginRequest.getUsername());
+        User user = repository.findByEmail(loginRequest.getUsername());
         UserDetailsImpl userDetailsImpl = new UserDetailsImpl(user);
         // generate token
         // todo: do we needs to generate token when user login?

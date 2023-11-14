@@ -1,25 +1,22 @@
 package com.cachenote.server.payload.entity;
 
-import com.cachenote.server.security.UserRole;
-
 import com.cachenote.server.utils.SnowflakeIdGenerator;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
-// Add the missing Entity annotation
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "appuser") // It's a good practice to use lowercase for table names
+@Table(name = "app_user") // It's a good practice to use lowercase for table names
 public class User {
 
     @Id
@@ -27,27 +24,43 @@ public class User {
     @GeneratedValue(
             generator = "SNOWFLAKE"
     )
-    @Column(name="user_id")
+    @Column(name = "user_id")
     private Long id;
 
-    @Column(name="username", nullable = false, unique = true) // Ensure username is unique
-    private String username;
+    @Column(name = "email", nullable = false, unique = true) // Ensure username is unique
+    private String email;
 
-    @Column(name="password")
+    @Column(name = "pwd")
     private String password;
 
-    // Assuming UserRole is an Enum and is correctly set up with JPA annotations
-    @Enumerated(EnumType.STRING) // This is needed if UserRole is an Enum
-    @Column(name="role")
-    private UserRole userRole = UserRole.ROLE_USER_REGISTERED;
-
     @OneToMany(mappedBy = "user")
-    private Set<Note> notes;
+    private Set<Note> notes = new HashSet<>();
 
-    public User(String username, String password, UserRole userRole) {
-        this.username = username;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
+    @CreationTimestamp
+    @Column(name = "reg_dt", nullable = false, updatable = false)
+    private LocalDateTime registrationDate;
+
+
+    /**
+     * Used to register a user.
+     *
+     * @param email     email address
+     * @param password  Encrypted password
+     * @param userRoles A set of UserRole
+     */
+    public User(String email, String password, Set<UserRole> userRoles) {
+        this.email = email;
         this.password = password;
-        this.userRole = userRole;
+        // Convert UserRole enum to Role entities
+        this.roles = userRoles.stream().map(Role::new).collect(Collectors.toSet());
     }
 }
 

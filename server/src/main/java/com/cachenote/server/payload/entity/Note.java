@@ -4,7 +4,11 @@ package com.cachenote.server.payload.entity;
 import com.cachenote.server.utils.SnowflakeIdGenerator;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 
 @AllArgsConstructor
@@ -22,30 +26,25 @@ public class Note {
     @GeneratedValue(
             generator = "SNOWFLAKE"
     )
-    @Column(name="note_id")
+    @Column(name = "note_id")
     private Long id;
 
 
-    @Column(name="body")
+    @Column(name = "body")
     private String body;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
-//    @Column(name="cre_dt")
-//    private LocalDateTime createdAt;
-//
-//
-//    @Column(name="last_edit_dt")
-//    private LocalDateTime lastEditTime;
 
-    @Override
-    public String toString() {
-        return "Note{" +
-                "id='" + id + '\'' +
-                ", body='" + body + '\'' +
-                '}';
-    }
+    @CreationTimestamp
+    @Column(name = "cre_dt", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "last_edit_dt")
+    private LocalDateTime lastEditTime;
+
 
 }

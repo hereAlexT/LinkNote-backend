@@ -42,7 +42,7 @@ public class NoteServiceImpl implements NoteService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Long userId = userDetails.getIdLong();
+        Long userId = userDetails.getId();
 
         // Create a reference to the User - no database call is made here
         User userReference = userRepository.getReferenceById(userId);
@@ -69,7 +69,7 @@ public class NoteServiceImpl implements NoteService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Long userId = userDetails.getIdLong();
+        Long userId = userDetails.getId();
         List<Note> notes = noteRepository.findAllNotesByUserId(userId); // Pass the list to the method
 
         List<NoteResponse> response = new ArrayList<>();
@@ -88,7 +88,7 @@ public class NoteServiceImpl implements NoteService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Long userId = userDetails.getIdLong();
+        Long userId = userDetails.getId();
         Note note = noteRepository.findById(id)
                 .orElseThrow(() -> new NoteNotFoundException(id, null));
 
@@ -107,7 +107,7 @@ public class NoteServiceImpl implements NoteService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Long userId = userDetails.getIdLong();
+        Long userId = userDetails.getId();
 
         Note existingNote = noteRepository.findById(noteRequest.getId())
                 .orElseThrow(() -> new NoteNotFoundException(noteRequest.getId(), null));
