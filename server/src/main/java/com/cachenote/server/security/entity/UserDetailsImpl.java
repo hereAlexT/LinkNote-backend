@@ -21,10 +21,8 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Assuming that the 'name' field in the 'Role' class is correctly typed as 'UserRole'
-        // and that 'UserRole' is an enum
         return user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name())) // Use 'getName()' to get the enum and 'name()' to get the String representation
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +33,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail(); // Assuming email is used as the username
+        return user.getEmail();
     }
 
     public Long getId() {
