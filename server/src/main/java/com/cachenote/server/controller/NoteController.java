@@ -46,9 +46,9 @@ public class NoteController {
 
     @PutMapping()
     @PreAuthorize("hasAnyRole('USER_NORMAL', 'USER_PAID', 'USER_ADMIN')")
-    public ResponseEntity<Void> updateNoteById(@RequestBody NoteRequest noteRequest) {
+    public ResponseEntity<String> updateNoteById(@RequestBody NoteRequest noteRequest) {
         noteService.updateNoteById(noteRequest);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok("success");
     }
 
 

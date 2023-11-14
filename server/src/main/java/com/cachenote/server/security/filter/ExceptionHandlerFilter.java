@@ -1,6 +1,6 @@
 package com.cachenote.server.security.filter;
 
-import com.cachenote.server.common.error.StatusCode;
+import com.cachenote.server.common.StatusCode;
 import com.cachenote.server.common.exception.TokenNotProvidedException;
 import com.cachenote.server.security.FilterResponseWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +38,12 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
             logger.debug(e.getMessage());
             buildJsonResponse(response, HttpStatus.UNAUTHORIZED.value());
             FilterResponseWrapper<String> wrapper = FilterResponseWrapper.Result(StatusCode.EXPIRED_JWT_TOKEN.getCode(), "JWT Token Expired", null);
+            response.getWriter().write(objectMapper.writeValueAsString(wrapper));
+        }
+        catch (Exception e) {
+            logger.debug(e.getMessage());
+            buildJsonResponse(response, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            FilterResponseWrapper<String> wrapper = FilterResponseWrapper.Result(StatusCode.INTERNAL_SERVER_ERROR.getCode(), "System Error " + e.getMessage(), null);
             response.getWriter().write(objectMapper.writeValueAsString(wrapper));
         }
     }

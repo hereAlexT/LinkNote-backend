@@ -2,7 +2,6 @@ package com.cachenote.server.common;
 
 
 import com.cachenote.server.common.ResponseWrapper.ExceptionWrapper;
-import com.cachenote.server.common.error.StatusCode;
 import com.cachenote.server.common.exception.BadUsernamePasswordException;
 import com.cachenote.server.common.exception.NoteAccessDeniedException;
 import com.cachenote.server.common.exception.NoteNotFoundException;

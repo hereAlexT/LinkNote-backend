@@ -2,10 +2,7 @@ package com.cachenote.server.security;
 
 
 import com.cachenote.server.common.ResponseWrapper.BaseResponseWrapper;
-import com.cachenote.server.common.error.StatusCode;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**

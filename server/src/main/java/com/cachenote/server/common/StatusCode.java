@@ -1,4 +1,4 @@
-package com.cachenote.server.common.error;
+package com.cachenote.server.common;
 
 import lombok.Getter;
 
@@ -19,14 +19,13 @@ public enum StatusCode {
     INVALID_JWT_TOKEN(602, "Invalid JWT Token"),
     NO_JWT_TOKEN(603, "No JWT Token Provided"),
 
+
     /**
      * Un-authorized endpoints visit.
      */
     ACCESS_DENIED(603, "Not authorized to this resources"),
 
     INTERNAL_SERVER_ERROR(700, "Internal Server Error");
-
-
 
 
     private final int code;

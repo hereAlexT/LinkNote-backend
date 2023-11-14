@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -77,8 +78,12 @@ public class AuthServiceImpl implements AuthService {
             throw new BadUsernamePasswordException("Wrong username or password.");
         }
 
-        User user = repository.findByEmail(loginRequest.getUsername());
-        UserDetailsImpl userDetailsImpl = new UserDetailsImpl(user);
+        Optional<User> user = repository.findByEmail(loginRequest.getUsername());
+        if (user.isEmpty()) {
+            throw new BadUsernamePasswordException("User name not found.");
+        }
+
+        UserDetailsImpl userDetailsImpl = new UserDetailsImpl(user.get());
         // generate token
         // todo: do we needs to generate token when user login?
         var jwtToken = jwtService.generateToken(userDetailsImpl);
