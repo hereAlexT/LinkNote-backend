@@ -36,11 +36,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String username;
-        //If there is no token in header, do next filter.
+        //If there is no token in header throw an Exception
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new TokenNotProvidedException(null);
         }
-        // else, check the token.
+        // else, valid the token.
         jwt = authHeader.substring(7);
         username = jwtService.extractUsername(jwt);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
