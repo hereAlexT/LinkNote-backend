@@ -13,7 +13,7 @@ public class Snowflake {
     /**
      * 起始的时间戳
      */
-    private final static long START_STMP = 1480166465631L;
+    private final static long START_STMP = 1699936749187L;
 
     /**
      * 每一部分占用的位数
