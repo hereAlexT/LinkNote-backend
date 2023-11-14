@@ -25,8 +25,8 @@ public class NoteServiceImpl implements NoteService {
     private static final Logger logger = LoggerFactory.getLogger(NoteServiceImpl.class);
 
 
-    private NoteRepository noteRepository;
-    private UserRepository userRepository;
+    private final NoteRepository noteRepository;
+    private final UserRepository userRepository;
 
     public NoteServiceImpl(NoteRepository noteRepository, UserRepository userRepository) {
         this.noteRepository = noteRepository;
@@ -53,7 +53,7 @@ public class NoteServiceImpl implements NoteService {
         note.setUser(userReference);
         Note newNote = noteRepository.save(note);
 
-        logger.debug("Created Note: {}", newNote.toString());
+        logger.debug("Created Note: {}", newNote);
 
         //convert entity to DTO
         NoteResponse newResponse = new NoteResponse();

@@ -2,7 +2,6 @@ package com.cachenote.server.controller;
 
 
 import com.cachenote.server.common.GlobalExceptionHandler;
-import com.cachenote.server.config.WebConfig;
 import com.cachenote.server.payload.Request.NoteRequest;
 
 import com.cachenote.server.service.NoteService;
@@ -12,9 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -61,7 +58,7 @@ public class NoteControllerTests {
 
     private MockMvc mockMvc;
 
-    String notePrefix = "/api/v1/note";
+    final String notePrefix = "/api/v1/note";
 
     @Before
     public void setup() {

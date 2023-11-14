@@ -6,7 +6,6 @@ import com.cachenote.server.payload.Request.NoteRequest;
 import com.cachenote.server.service.NoteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/note")
 public class NoteController {
-    private NoteService noteService;
+    private final NoteService noteService;
 
     public NoteController(NoteService noteService) {
         this.noteService = noteService;

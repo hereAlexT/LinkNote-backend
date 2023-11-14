@@ -2,7 +2,6 @@ package com.cachenote.server.security.config;
 
 
 import com.cachenote.server.repository.UserRepository;
-import com.cachenote.server.security.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -36,8 +36,8 @@ public class SnowflakeId {
     private final static long DATACENTER_LEFT = SEQUENCE_BIT + MACHINE_BIT;
     private final static long TIMESTMP_LEFT = DATACENTER_LEFT + DATACENTER_BIT;
 
-    private long datacenterId;  //数据中心
-    private long machineId;     //机器标识
+    private final long datacenterId;  //数据中心
+    private final long machineId;     //机器标识
     private long sequence = 0L; //序列号
     private long lastStmp = -1L;//上一次时间戳
 
@@ -55,7 +55,6 @@ public class SnowflakeId {
     /**
      * 产生下一个ID
      *
-     * @return
      */
     public synchronized long nextId() {
         long currStmp = getNewstmp();

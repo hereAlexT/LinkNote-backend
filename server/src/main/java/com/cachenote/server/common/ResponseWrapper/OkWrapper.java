@@ -1,9 +1,5 @@
 package com.cachenote.server.common.ResponseWrapper;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-
 
 public class OkWrapper<T> extends BaseResponseWrapper<T> {
 
