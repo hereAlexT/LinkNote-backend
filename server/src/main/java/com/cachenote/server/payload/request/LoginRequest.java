@@ -1,4 +1,4 @@
-package com.cachenote.server.payload.Request;
+package com.cachenote.server.payload.request;
 
 
 import lombok.*;

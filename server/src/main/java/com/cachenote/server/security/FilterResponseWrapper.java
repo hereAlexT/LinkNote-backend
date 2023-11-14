@@ -1,7 +1,7 @@
 package com.cachenote.server.security;
 
 
-import com.cachenote.server.common.ResponseWrapper.BaseResponseWrapper;
+import com.cachenote.server.common.responseWrapper.BaseResponseWrapper;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 

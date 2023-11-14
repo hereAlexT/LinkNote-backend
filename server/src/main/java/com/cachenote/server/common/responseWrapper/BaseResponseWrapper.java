@@ -1,4 +1,4 @@
-package com.cachenote.server.common.ResponseWrapper;
+package com.cachenote.server.common.responseWrapper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

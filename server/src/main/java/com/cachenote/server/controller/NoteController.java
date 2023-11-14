@@ -1,8 +1,8 @@
 package com.cachenote.server.controller;
 
 
-import com.cachenote.server.payload.Reponse.NoteResponse;
-import com.cachenote.server.payload.Request.NoteRequest;
+import com.cachenote.server.payload.reponse.NoteResponse;
+import com.cachenote.server.payload.request.NoteRequest;
 import com.cachenote.server.service.NoteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

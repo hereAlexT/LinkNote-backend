@@ -1,4 +1,4 @@
-package com.cachenote.server.payload.Reponse;
+package com.cachenote.server.payload.reponse;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

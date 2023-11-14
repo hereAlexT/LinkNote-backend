@@ -1,7 +1,7 @@
 package com.cachenote.server.service;
 
-import com.cachenote.server.payload.Reponse.NoteResponse;
-import com.cachenote.server.payload.Request.NoteRequest;
+import com.cachenote.server.payload.reponse.NoteResponse;
+import com.cachenote.server.payload.request.NoteRequest;
 
 import java.util.List;
 

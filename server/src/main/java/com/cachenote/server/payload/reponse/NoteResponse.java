@@ -1,15 +1,14 @@
-package com.cachenote.server.payload.Request;
+package com.cachenote.server.payload.reponse;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NoteRequest {
+@Data
+public class NoteResponse {
     private Long id;
     private String body;
-
 }

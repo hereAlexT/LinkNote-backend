@@ -1,4 +1,4 @@
-package com.cachenote.server.payload.Reponse;
+package com.cachenote.server.payload.request;
 
 
 import lombok.AllArgsConstructor;
@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BadCredentialsResponse implements ValidResponse {
-    private String message;
+public class NoteRequest {
+    private Long id;
+    private String body;
+
 }

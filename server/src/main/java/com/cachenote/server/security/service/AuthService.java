@@ -1,9 +1,9 @@
 package com.cachenote.server.security.service;
 
 
-import com.cachenote.server.payload.Reponse.ValidResponse;
-import com.cachenote.server.payload.Request.LoginRequest;
-import com.cachenote.server.payload.Request.SignupRequest;
+import com.cachenote.server.payload.reponse.ValidResponse;
+import com.cachenote.server.payload.request.LoginRequest;
+import com.cachenote.server.payload.request.SignupRequest;
 
 public interface AuthService {
 

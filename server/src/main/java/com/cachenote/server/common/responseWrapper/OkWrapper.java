@@ -1,4 +1,4 @@
-package com.cachenote.server.common.ResponseWrapper;
+package com.cachenote.server.common.responseWrapper;
 
 
 public class OkWrapper<T> extends BaseResponseWrapper<T> {

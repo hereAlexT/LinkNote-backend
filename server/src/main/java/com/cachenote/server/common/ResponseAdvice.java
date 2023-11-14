@@ -1,8 +1,7 @@
 package com.cachenote.server.common;
 
-import com.cachenote.server.common.ResponseWrapper.ExceptionWrapper;
-import com.cachenote.server.common.ResponseWrapper.OkWrapper;
-import com.cachenote.server.common.StatusCode;
+import com.cachenote.server.common.responseWrapper.ExceptionWrapper;
+import com.cachenote.server.common.responseWrapper.OkWrapper;
 import lombok.SneakyThrows;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

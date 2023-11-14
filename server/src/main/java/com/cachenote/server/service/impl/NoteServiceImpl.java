@@ -2,9 +2,9 @@ package com.cachenote.server.service.impl;
 
 import com.cachenote.server.common.exception.NoteAccessDeniedException;
 import com.cachenote.server.common.exception.NoteNotFoundException;
-import com.cachenote.server.payload.Reponse.NoteResponse;
+import com.cachenote.server.payload.reponse.NoteResponse;
 import com.cachenote.server.payload.entity.Note;
-import com.cachenote.server.payload.Request.NoteRequest;
+import com.cachenote.server.payload.request.NoteRequest;
 import com.cachenote.server.payload.entity.User;
 import com.cachenote.server.repository.UserRepository;
 import com.cachenote.server.security.entity.UserDetailsImpl;
