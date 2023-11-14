@@ -1,4 +1,5 @@
 package com.cachenote.server.security.service;
+import com.cachenote.server.security.entity.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,8 +24,10 @@ public class JwtService {
     private static final String SECRET_KEY = "d7845cda363939a0f7bc528c6056d0c9eb883d432d7910eeb59999125598ed40";
 
 
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+    public Long extractUserId(String token) {
+        final Claims claims = extractAllClaims(token);
+        String userIdString = claims.getSubject();
+        return Long.parseLong(userIdString);
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -32,27 +35,27 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetailsImpl userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
     public String generateToken(
             Map<String, Object> extraClaims,
-            UserDetails userDetails
+            UserDetailsImpl userDetails
     ) {
         return Jwts.
                 builder().
                 setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(userDetails.getId().toString())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    public boolean isTokenValid(String token, UserDetailsImpl userDetails) {
+        final Long userId = extractUserId(token);
+        return (userId.equals(userDetails.getId())) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {

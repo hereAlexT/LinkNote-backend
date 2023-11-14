@@ -4,7 +4,6 @@ import com.cachenote.server.payload.entity.User;
 import com.cachenote.server.repository.UserRepository;
 import com.cachenote.server.security.entity.UserDetailsImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -19,11 +18,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetailsImpl loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByEmail(username);
         if (user.isEmpty()) {
-            throw new UsernameNotFoundException("Username not found");
+            throw new UsernameNotFoundException("User not found by username");
         }
         return new UserDetailsImpl(user.get());
     }
+
+    public UserDetailsImpl loadUserByUserId(Long userId) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("User not found by user_id");
+        }
+        return new UserDetailsImpl(user.get());
+    }
+
 }
