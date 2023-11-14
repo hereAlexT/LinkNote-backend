@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginResponse implements ValidResponse{
     private String token;
-
-
-    @JsonProperty("refresh_token")
-    private String refreshToken;
+    @JsonProperty("expires_in")
+    private String expiresIn; //todo: add refreshtime
 }
