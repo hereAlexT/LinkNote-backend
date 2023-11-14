@@ -26,7 +26,7 @@ public class NoteController {
     @PostMapping
     @PreAuthorize("hasAnyRole('USER_NORMAL', 'USER_PAID', 'USER_ADMIN')")
     public ResponseEntity<NoteResponse> createNote(@RequestBody NoteRequest noteRequest) {
-        return new ResponseEntity<NoteResponse>(noteService.createNote(noteRequest), HttpStatus.CREATED);
+        return new ResponseEntity<>(noteService.createNote(noteRequest), HttpStatus.CREATED);
 
     }
 
