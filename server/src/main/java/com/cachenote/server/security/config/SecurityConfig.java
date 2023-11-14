@@ -27,6 +27,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @EnableWebSecurity(debug = true) //todo: set the value in prod
 public class SecurityConfig {
+    private static final String[] SWAGGER_PATHS = {"/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/webjars/swagger-ui/**", "/context-path/swagger-ui.html", "/context-path/v3/api-docs", "/api-docs"};
+
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -54,6 +56,7 @@ public class SecurityConfig {
                 .and().csrf().disable()//todo: set csrf() in prod: ignoreingRequestMatch
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll() //authorized all the target here
+                .requestMatchers(SWAGGER_PATHS).permitAll()
                 .anyRequest().authenticated()
 
                 .and().sessionManagement()

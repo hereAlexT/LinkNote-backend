@@ -27,3 +27,6 @@ All table and filed name in database should be lower case.
 ![Git Model](attachement/git-model.png)
 Reference: [A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model/)
 
+
+#### Remove Springdoc Settings
+Remove springdoc settings in SecurityConfig.java and JwtFilter in prod
