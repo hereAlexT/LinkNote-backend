@@ -37,7 +37,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         } catch (ExpiredJwtException e) {
             logger.debug(e.getMessage());
             buildJsonResponse(response, HttpStatus.UNAUTHORIZED.value());
-            FilterResponseWrapper<String> wrapper = FilterResponseWrapper.Result(StatusCode.EXPIRED_JWT_TOKEN.getCode(), "JWT Token Expired", null);
+            FilterResponseWrapper<String> wrapper = FilterResponseWrapper.Result(StatusCode.EXPIRED_JWT_TOKEN.getCode(), "JWT TokenCache Expired", null);
             response.getWriter().write(objectMapper.writeValueAsString(wrapper));
         }
         catch (Exception e) {

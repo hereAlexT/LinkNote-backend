@@ -1,24 +1,27 @@
 package com.cachenote.server.security.service;
 
-
-import com.cachenote.server.common.exception.BadUsernamePasswordException;
 import com.cachenote.server.common.exception.AccountExistException;
+import com.cachenote.server.common.exception.BadUsernamePasswordException;
+import com.cachenote.server.payload.entity.Role;
+import com.cachenote.server.payload.entity.User;
+import com.cachenote.server.payload.entity.UserRole;
 import com.cachenote.server.payload.reponse.LoginResponse;
+import com.cachenote.server.payload.reponse.TokenResponse;
+import com.cachenote.server.payload.reponse.UserResponse;
 import com.cachenote.server.payload.reponse.ValidResponse;
 import com.cachenote.server.payload.request.LoginRequest;
 import com.cachenote.server.payload.request.SignupRequest;
-import com.cachenote.server.payload.entity.Role;
-import com.cachenote.server.payload.entity.User;
 import com.cachenote.server.repository.RoleRepository;
 import com.cachenote.server.repository.UserRepository;
-import com.cachenote.server.payload.entity.UserRole;
 import com.cachenote.server.security.entity.UserDetailsImpl;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -68,30 +71,21 @@ public class AuthServiceImpl implements AuthService {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUsername(),
+                            loginRequest.getEmail(),
                             loginRequest.getPassword()
                     )
             );
         } catch (BadCredentialsException e) {
-//            return new BadCredentialsResponse("Wrong username or password.");
             throw new BadUsernamePasswordException("Wrong username or password.");
         }
-
-        Optional<User> user = repository.findByEmail(loginRequest.getUsername());
+        Optional<User> user = repository.findByEmail(loginRequest.getEmail());
         if (user.isEmpty()) {
             throw new BadUsernamePasswordException("User name not found.");
         }
-
         UserDetailsImpl userDetailsImpl = new UserDetailsImpl(user.get());
-        // generate token
-        // todo: do we needs to generate token when user login?
-        var jwtToken = jwtService.generateToken(userDetailsImpl);
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setToken(jwtToken);
+        TokenResponse tokenResponse = jwtService.generateTokenResponse(userDetailsImpl);
+        UserResponse userResponse = new UserResponse(user.get().getId(), user.get().getDisplayName());
 
-        return loginResponse;
-
+        return new LoginResponse(tokenResponse, userResponse);
     }
-
-
 }

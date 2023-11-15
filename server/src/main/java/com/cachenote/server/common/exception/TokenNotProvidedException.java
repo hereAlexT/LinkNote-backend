@@ -3,7 +3,7 @@ package com.cachenote.server.common.exception;
 
 public class TokenNotProvidedException extends RuntimeException {
     public TokenNotProvidedException(String message) {
-        super("Token not provided" +
+        super("TokenCache not provided" +
                 (message != null ? ". Message: " + message : "") + ".");
     }
 

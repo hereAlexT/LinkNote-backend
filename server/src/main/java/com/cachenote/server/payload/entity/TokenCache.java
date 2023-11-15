@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
+import java.time.LocalDateTime;
+
 
 @RedisHash("token")
 @Data
@@ -14,11 +16,10 @@ import org.springframework.data.redis.core.TimeToLive;
 public class TokenCache {
     @Id
     private String token;
-    private String username;
+    private String userId;
 
     @TimeToLive
-    private long expiration; //TTL in seconds
-
+    private LocalDateTime expiredDatetime; //TTL in seconds
 
 
 }
