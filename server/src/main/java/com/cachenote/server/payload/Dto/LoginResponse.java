@@ -1,12 +1,9 @@
-package com.cachenote.server.payload.reponse;
+package com.cachenote.server.payload.Dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 
 @Data

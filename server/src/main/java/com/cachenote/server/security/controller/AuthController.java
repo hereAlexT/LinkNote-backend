@@ -1,9 +1,9 @@
 package com.cachenote.server.security.controller;
 
 
-import com.cachenote.server.payload.reponse.ValidResponse;
-import com.cachenote.server.payload.request.LoginRequest;
-import com.cachenote.server.payload.request.SignupRequest;
+import com.cachenote.server.payload.Dto.ValidResponse;
+import com.cachenote.server.payload.Dto.LoginRequest;
+import com.cachenote.server.payload.Dto.SignupRequest;
 import com.cachenote.server.security.service.AuthService;
 
 

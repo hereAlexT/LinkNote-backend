@@ -2,7 +2,7 @@ package com.cachenote.server.controller;
 
 
 import com.cachenote.server.common.GlobalExceptionHandler;
-import com.cachenote.server.payload.request.UpdateNoteRequest;
+import com.cachenote.server.payload.Dto.UpdateNoteRequest;
 
 import com.cachenote.server.service.NoteService;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,4 +1,4 @@
-package com.cachenote.server.payload.reponse;
+package com.cachenote.server.payload.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.cachenote.server.payload.request;
+package com.cachenote.server.payload.Dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

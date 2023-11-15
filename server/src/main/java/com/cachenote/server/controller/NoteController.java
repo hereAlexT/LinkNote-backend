@@ -1,9 +1,9 @@
 package com.cachenote.server.controller;
 
 
-import com.cachenote.server.payload.reponse.CreateNoteResponse;
-import com.cachenote.server.payload.reponse.NoteResponse;
-import com.cachenote.server.payload.request.UpdateNoteRequest;
+import com.cachenote.server.payload.Dto.CreateNoteResponse;
+import com.cachenote.server.payload.Dto.NoteResponse;
+import com.cachenote.server.payload.Dto.UpdateNoteRequest;
 import com.cachenote.server.service.NoteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
