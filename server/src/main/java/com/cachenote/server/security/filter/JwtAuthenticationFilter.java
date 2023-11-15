@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -67,20 +66,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     }
 
-    private static final String[] SWAGGER_PATHS = {"/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/webjars/swagger-ui/**", "/context-path/swagger-ui.html", "/context-path/v3/api-docs", "/api-docs"};
+//    private static final String[] SWAGGER_PATHS = {"/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/webjars/swagger-ui/**", "/context-path/swagger-ui.html", "/context-path/v3/api-docs", "/api-docs"};
 
-    private AntPathMatcher antPathMatcher = new AntPathMatcher();
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
 
         // Check if the path matches any of the Swagger paths
-        for (String swaggerPath : SWAGGER_PATHS) {
-            if (antPathMatcher.match(swaggerPath, path)) {
-                return true;
-            }
-        }
+//        for (String swaggerPath : SWAGGER_PATHS) {
+//            if (antPathMatcher.match(swaggerPath, path)) {
+//                return true;
+//            }
+//        }
 
         // Check if the path matches the auth path
         return antPathMatcher.match("/api/v1/auth/**", path);
