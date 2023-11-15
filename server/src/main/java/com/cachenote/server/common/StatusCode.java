@@ -10,6 +10,10 @@ import lombok.Getter;
 @Getter
 public enum StatusCode {
     OK(1, "OK"),
+    /**
+     * When the email address not linked to any account
+     * or the account exists but the password is wrong.
+     */
     BAD_CREDENTIAL(600, "Wrong username or password"),
     /**
      * BAD_NOTE_REQUEST used for NoteAccessDeniedException and NoteNotFoundException.
@@ -23,8 +27,14 @@ public enum StatusCode {
     /**
      * Un-authorized endpoints visit.
      */
-    ACCESS_DENIED(603, "Not authorized to this resources"),
-
+    ACCESS_DENIED(604, "Not authorized to this resources"),
+    /**
+     * The account exists.
+     */
+    ACCOUNT_EXIST(605, "Account exist"),
+    /**
+     * Other error that not related to any action in the frontend.
+     */
     INTERNAL_SERVER_ERROR(700, "Internal Server Error");
 
 
