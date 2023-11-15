@@ -37,7 +37,6 @@ public class Note {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
-
     @CreationTimestamp
     @Column(name = "cre_dt", nullable = false, updatable = false)
     private LocalDateTime createdAt;

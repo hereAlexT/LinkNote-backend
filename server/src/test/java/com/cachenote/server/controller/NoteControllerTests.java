@@ -2,7 +2,7 @@ package com.cachenote.server.controller;
 
 
 import com.cachenote.server.common.GlobalExceptionHandler;
-import com.cachenote.server.payload.request.NoteRequest;
+import com.cachenote.server.payload.request.UpdateNoteRequest;
 
 import com.cachenote.server.service.NoteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -71,10 +71,10 @@ public class NoteControllerTests {
     public void shouldCreateNewUserAndGetById() throws Exception {
         String randomBody = UUID.randomUUID().toString();
 
-        final NoteRequest noteRequest = new NoteRequest();
-        noteRequest.setBody(randomBody);
+        final UpdateNoteRequest updateNoteRequest = new UpdateNoteRequest();
+        updateNoteRequest.setBody(randomBody);
 
-        String json = mapper.writeValueAsString(noteRequest);
+        String json = mapper.writeValueAsString(updateNoteRequest);
         MvcResult result = mockMvc.perform(post(notePrefix + "/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -108,10 +108,10 @@ public class NoteControllerTests {
         for (int i = 0; i < 10; i++) {
             String randomBody = UUID.randomUUID().toString();
 
-            final NoteRequest noteRequest = new NoteRequest();
-            noteRequest.setBody(randomBody);
+            final UpdateNoteRequest updateNoteRequest = new UpdateNoteRequest();
+            updateNoteRequest.setBody(randomBody);
 
-            String json = mapper.writeValueAsString(noteRequest);
+            String json = mapper.writeValueAsString(updateNoteRequest);
             MvcResult result = mockMvc.perform(post(notePrefix + "/")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(json))
@@ -159,10 +159,10 @@ public class NoteControllerTests {
         String randomBody = UUID.randomUUID().toString();
 
         // Create a note
-        NoteRequest noteRequest = new NoteRequest();
-        noteRequest.setBody(randomBody);
+        UpdateNoteRequest updateNoteRequest = new UpdateNoteRequest();
+        updateNoteRequest.setBody(randomBody);
 
-        String json = mapper.writeValueAsString(noteRequest);
+        String json = mapper.writeValueAsString(updateNoteRequest);
         MvcResult result = mockMvc.perform(post(notePrefix + "/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -173,7 +173,7 @@ public class NoteControllerTests {
         Long id = JsonPath.parse(response).read("$.id");
 
         // Update the note
-        NoteRequest updateRequest = new NoteRequest();
+        UpdateNoteRequest updateRequest = new UpdateNoteRequest();
         updateRequest.setId(id);
         updateRequest.setBody("Updated body");
 
@@ -189,10 +189,10 @@ public class NoteControllerTests {
         String randomBody = UUID.randomUUID().toString();
 
         // Create a note
-        NoteRequest noteRequest = new NoteRequest();
-        noteRequest.setBody(randomBody);
+        UpdateNoteRequest updateNoteRequest = new UpdateNoteRequest();
+        updateNoteRequest.setBody(randomBody);
 
-        String json = mapper.writeValueAsString(noteRequest);
+        String json = mapper.writeValueAsString(updateNoteRequest);
         MvcResult result = mockMvc.perform(post(notePrefix + "/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -210,7 +210,7 @@ public class NoteControllerTests {
     @Test
     public void shouldNotUpdateNonExistingNote() throws Exception {
         // Try to update a note that doesn't exist
-        NoteRequest updateRequest = new NoteRequest();
+        UpdateNoteRequest updateRequest = new UpdateNoteRequest();
         Long nonExistingId = new Random().nextLong();
         updateRequest.setId(nonExistingId);
         updateRequest.setBody("Updated body");

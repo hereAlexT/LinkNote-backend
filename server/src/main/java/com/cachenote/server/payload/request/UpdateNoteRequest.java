@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NoteRequest {
+public class UpdateNoteRequest {
     private Long id;
     private String body;
 

@@ -2,8 +2,9 @@ package com.cachenote.server.controller;
 
 
 import com.cachenote.server.payload.reponse.NoteResponse;
-import com.cachenote.server.payload.request.NoteRequest;
+import com.cachenote.server.payload.request.UpdateNoteRequest;
 import com.cachenote.server.service.NoteService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,12 +22,13 @@ public class NoteController {
     }
 
 
-
-
+    /**
+     * It's important to make sure that submitted text already escaped
+     */
     @PostMapping
     @PreAuthorize("hasAnyRole('USER_NORMAL', 'USER_PAID', 'USER_ADMIN')")
-    public ResponseEntity<NoteResponse> createNote(@RequestBody NoteRequest noteRequest) {
-        return new ResponseEntity<>(noteService.createNote(noteRequest), HttpStatus.CREATED);
+    public ResponseEntity<NoteResponse> createNote(@RequestBody @Valid UpdateNoteRequest updateNoteRequest) {
+        return new ResponseEntity<>(noteService.createNote(updateNoteRequest), HttpStatus.CREATED);
 
     }
 
@@ -45,8 +47,8 @@ public class NoteController {
 
     @PutMapping()
     @PreAuthorize("hasAnyRole('USER_NORMAL', 'USER_PAID', 'USER_ADMIN')")
-    public ResponseEntity<String> updateNoteById(@RequestBody NoteRequest noteRequest) {
-        noteService.updateNoteById(noteRequest);
+    public ResponseEntity<String> updateNoteById(@RequestBody UpdateNoteRequest updateNoteRequest) {
+        noteService.updateNoteById(updateNoteRequest);
         return ResponseEntity.ok("success");
     }
 
