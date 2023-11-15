@@ -7,6 +7,7 @@ import com.cachenote.server.payload.request.SignupRequest;
 import com.cachenote.server.security.service.AuthService;
 
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,8 +31,9 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<ValidResponse> login(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<Void> signup(@RequestBody @Valid SignupRequest signupRequest) {
         return ResponseEntity.ok(authService.signup(signupRequest));
-    }
 
+
+    }
 }

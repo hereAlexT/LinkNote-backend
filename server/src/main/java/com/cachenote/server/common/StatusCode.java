@@ -23,7 +23,6 @@ public enum StatusCode {
     INVALID_JWT_TOKEN(602, "Invalid JWT Token"),
     NO_JWT_TOKEN(603, "No JWT Token Provided"),
 
-
     /**
      * Un-authorized endpoints visit.
      */
@@ -32,6 +31,13 @@ public enum StatusCode {
      * The account exists.
      */
     ACCOUNT_EXIST(605, "Account exist"),
+
+    /**
+     * Invalid input. E.g. invalid email address, invalid password.
+     */
+    BAD_REQUEST(606, "Bad Request"),
+
+
     /**
      * Other error that not related to any action in the frontend.
      */

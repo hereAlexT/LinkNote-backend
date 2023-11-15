@@ -5,7 +5,7 @@ CREATE TABLE "app_user"
     -- password
     "pwd"      VARCHAR(255) NOT NULL,
     -- display name
-    "dis_name" VARCHAR(30)  NULL,
+    "dis_name" VARCHAR(30)  NOT NULL,
     -- country calling code
     "c_code"   VARCHAR(5)   NULL,
     -- phone number

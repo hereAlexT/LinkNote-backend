@@ -7,7 +7,7 @@ import com.cachenote.server.payload.request.SignupRequest;
 
 public interface AuthService {
 
-    ValidResponse signup(SignupRequest signupRequest);
+    Void signup(SignupRequest signupRequest);
 
     ValidResponse login(LoginRequest loginRequest);
 

@@ -2,8 +2,8 @@ package com.cachenote.server.security.service;
 
 
 import com.cachenote.server.common.exception.BadUsernamePasswordException;
+import com.cachenote.server.common.exception.AccountExistException;
 import com.cachenote.server.payload.reponse.LoginResponse;
-import com.cachenote.server.payload.reponse.SignupResponse;
 import com.cachenote.server.payload.reponse.ValidResponse;
 import com.cachenote.server.payload.request.LoginRequest;
 import com.cachenote.server.payload.request.SignupRequest;
@@ -14,6 +14,7 @@ import com.cachenote.server.repository.UserRepository;
 import com.cachenote.server.payload.entity.UserRole;
 import com.cachenote.server.security.entity.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,32 +37,30 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
 
 
-
-
     @Override
-    public SignupResponse signup(SignupRequest signupRequest) {
-        // todo: check if the username exist or nor
+    public Void signup(SignupRequest signupRequest) {
+
 
         User user = new User(
-                signupRequest.getUsername(),
+                signupRequest.getEmail(),
                 passwordEncoder.encode(signupRequest.getPassword()),
                 Collections.singleton(UserRole.ROLE_USER_REGISTERED));
-        Set<Role> roles =user.getRoles().stream()
+        Set<Role> roles = user.getRoles().stream()
                 .map(roleEnum -> roleRepository.findByName(roleEnum.getName())
                         .orElseThrow(() -> new RuntimeException("Role not found: " + roleEnum.getName())))
                 .collect(Collectors.toSet());
 
         user.setRoles(roles);
+        user.setDisplayName(signupRequest.getDisplayName());
 
-        UserDetailsImpl userDetailsImpl = new UserDetailsImpl(user);
-        repository.save(user);
+        try {
+            repository.save(user);
+        } catch (DataIntegrityViolationException e) {
+            throw new AccountExistException(signupRequest.getEmail());
+        }
 
-        var jwtToken = jwtService.generateToken(userDetailsImpl);
-        SignupResponse signupResponse = new SignupResponse();
-        signupResponse.setToken(jwtToken);
-        return signupResponse;
+        return null;
     }
-
 
 
     @Override
@@ -93,7 +92,6 @@ public class AuthServiceImpl implements AuthService {
         return loginResponse;
 
     }
-
 
 
 }

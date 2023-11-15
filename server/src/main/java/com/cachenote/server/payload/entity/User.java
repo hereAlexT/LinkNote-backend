@@ -2,6 +2,7 @@ package com.cachenote.server.payload.entity;
 
 import com.cachenote.server.utils.SnowflakeIdGenerator;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "app_user") // It's a good practice to use lowercase for table names
+@Table(name = "app_user")
 public class User {
 
     @Id
@@ -27,11 +28,14 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "email", nullable = false, unique = true) // Ensure username is unique
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "pwd")
     private String password;
+
+    @Column(name = "dis_name", nullable = false)
+    private String displayName;
 
     @OneToMany(mappedBy = "user")
     private Set<Note> notes = new HashSet<>();
