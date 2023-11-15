@@ -1,6 +1,7 @@
 package com.cachenote.server.controller;
 
 
+import com.cachenote.server.payload.Dto.CreateNoteRequest;
 import com.cachenote.server.payload.Dto.CreateNoteResponse;
 import com.cachenote.server.payload.Dto.NoteResponse;
 import com.cachenote.server.payload.Dto.UpdateNoteRequest;
@@ -28,8 +29,8 @@ public class NoteController {
      */
     @PostMapping
     @PreAuthorize("hasAnyRole('USER_NORMAL', 'USER_PAID', 'USER_ADMIN')")
-    public ResponseEntity<CreateNoteResponse> createNote(@RequestBody @Valid UpdateNoteRequest updateNoteRequest) {
-        return new ResponseEntity<>(noteService.createNote(updateNoteRequest), HttpStatus.CREATED);
+    public ResponseEntity<CreateNoteResponse> createNote(@RequestBody @Valid CreateNoteRequest createNoteRequest) {
+        return new ResponseEntity<>(noteService.createNote(createNoteRequest), HttpStatus.CREATED);
 
     }
 

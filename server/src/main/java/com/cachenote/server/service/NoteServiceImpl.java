@@ -2,6 +2,7 @@ package com.cachenote.server.service;
 
 import com.cachenote.server.common.exception.NoteAccessDeniedException;
 import com.cachenote.server.common.exception.NoteNotFoundException;
+import com.cachenote.server.payload.Dto.CreateNoteRequest;
 import com.cachenote.server.payload.Dto.CreateNoteResponse;
 import com.cachenote.server.payload.Dto.NoteResponse;
 import com.cachenote.server.payload.entity.Note;
@@ -35,7 +36,7 @@ public class NoteServiceImpl implements NoteService {
 
 
     @Override
-    public CreateNoteResponse createNote(UpdateNoteRequest updateNoteRequest) {
+    public CreateNoteResponse createNote(CreateNoteRequest createNoteRequest) {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder
                 .getContext()
@@ -49,7 +50,7 @@ public class NoteServiceImpl implements NoteService {
 
         //convert DTO to entity
         Note note = new Note();
-        note.setBody(updateNoteRequest.getBody());
+        note.setBody(createNoteRequest.getBody());
         note.setUser(userReference);
         Note newNote = noteRepository.save(note);
         logger.debug("Created Note: {}", newNote);
