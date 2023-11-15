@@ -3,15 +3,14 @@ package com.cachenote.server.config;
 import com.cachenote.server.utils.SnowflakeId;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Value;
 
 @Configuration
 public class SnowflakeIdConfig {
 
     @Bean
-    public SnowflakeId snowflake() {
-        //todo: the nodeID abd machineID should from environment
-        long nodeId = 1;
-        long machineId = 2;
+    public SnowflakeId snowflake(@Value("${app.snowflakeId.nodeId}") Long nodeId,
+                                 @Value("${app.snowflakeId.machineId}") Long machineId) {
         return new SnowflakeId(nodeId, machineId);
     }
 }
