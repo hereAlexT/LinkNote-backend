@@ -30,6 +30,7 @@ public class SignupRequest {
 
 
     @Size(min = 2, max = 32, message = "Display name must be between 2 - 32 characters long.")
+    @NotBlank
     @JsonProperty("dis_name")
     private String displayName;
 }
