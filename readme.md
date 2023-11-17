@@ -1,9 +1,13 @@
-#### run
+#### run dev
 Run dev env will start:
 - Postgres
 - Redis
 ```bash
 docker-compose -p cachenote -f docker-compose.dev.yml up
+```
+#### run prod
+```bash
+docker-compose -p linknote -f docker-compose.yml up
 ```
 
 #### Naming Method
