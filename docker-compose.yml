@@ -27,7 +27,7 @@ services:
       - app-network
 
   server:
-    image: linknote/server
+    image: linklabs/linknote-server
     depends_on:
       - postgres
     networks:

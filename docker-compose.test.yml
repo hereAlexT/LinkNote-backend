@@ -11,13 +11,8 @@ services:
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
       POSTGRES_DB: $POSTGRES_DB
     volumes:
-      - ./db/postgres/init_link_db.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/postgres_test/init_link_db_test.sql:/docker-entrypoint-initdb.d/init.sql
       - ~/LinkLabs/LinkNote/postgres-data:/var/lib/postgresql/data
-    deploy:
-      resources:
-        limits:
-          cpus: "1"
-          memory: 4000M
     logging:
       driver: json-file
       options:
@@ -27,18 +22,13 @@ services:
       - app-network
 
   server:
-    image: linknote/server
+    image: linklabs1117/linknote-server:${VERSION}
     depends_on:
       - postgres
     networks:
       - app-network
     ports:
       - "8080:8080"
-    deploy:
-      resources:
-        limits:
-          cpus: "2"
-          memory: 13000M
 
 networks:
   app-network:

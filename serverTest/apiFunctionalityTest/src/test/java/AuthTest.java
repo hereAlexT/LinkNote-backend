@@ -25,6 +25,9 @@ public class AuthTest {
     @Before
     public void setUp() {
         faker = new Faker();
+        System.out.println(baseUrl);
+        System.out.println(authUrl);
+        System.out.println(noteUrl);
     }
 
     public String getUniqueEmail() {
