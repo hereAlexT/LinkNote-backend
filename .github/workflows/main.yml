@@ -30,13 +30,37 @@ jobs:
           path: ~/.m2
           key: ${{runner.os}}-m2-${{hashFiles('**/pom.xml')}}
           restore-keys: ${{runner.os}}-m2
+          
+      - name: Check curr dic
+        run: |
+          pwd
+          ls -lah
 
       - name: Install Maven Dependencies
-        run: mvn install
+        run: mvn -f server/pom.xml install
 
       - name: Run tests
-        run: mvn --batch-mode --update-snapshots verify
+        run: mvn --file server/pom.xml --batch-mode --update-snapshots verify
 
+
+      # Functionalities tests
+
+      - name: Setup Docker Environment
+        run: |
+          docker/setup-qemu-action@v2
+          docker/setup-buildx-acition@v2
+
+      - name: Build Docker Image
+        run: |
+          cd serverTest
+          docker build -t linknote/server .
+
+      - name: Start whole service
+        run: docker-compose -p linknote -f docker-compose.yml up
+
+      - name: Run functionality tests
+        run: mvn --file serverTest/ApiFunctionalityTest/pom.xml test
+          
 
 
 
