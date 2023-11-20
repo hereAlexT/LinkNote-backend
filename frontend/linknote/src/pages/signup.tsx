@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonInput, IonPage, IonText, IonTitle, IonToolbar, IonButton } from '@ionic/react';
+import { IonContent, IonHeader, IonInput, IonPage, IonText, IonTitle, IonToolbar, IonButton, IonGrid, IonCol, IonRow } from '@ionic/react';
 import { useState } from 'react';
 import ExploreContainer from '../components/ExploreContainer';
 import './signup.css';
@@ -43,20 +43,49 @@ const Signup: React.FC = () => {
             <IonTitle size="large">Signup</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonInput
-          className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-          type="email"
-          fill="solid"
-          label="Email"
-          labelPlacement="floating"
-          helperText="Enter a valid email"
-          errorText="Invalid email"
-          onIonInput={(event) => validate(event)}
-          onIonBlur={() => markTouched()}
-        ></IonInput>
-        <IonInput label="password" labelPlacement="floating" counter={true} maxlength={32} minlength={8}></IonInput>
-        <IonInput label="Display Name" labelPlacement="floating" counter={true} maxlength={32} minlength={8}></IonInput>
-        <IonButton >Signup</IonButton>
+
+        <IonGrid>
+          <IonRow>
+            <IonInput
+              className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
+              type="email"
+              fill="solid"
+              label="Email"
+              labelPlacement="floating"
+              helperText="Enter a valid email"
+              errorText="Invalid email"
+              onIonInput={(event) => validate(event)}
+              onIonBlur={() => markTouched()} />
+          </IonRow>
+          <IonRow>
+            <IonInput 
+            label="password" 
+            helperText="Type your password"
+            labelPlacement="floating" 
+            counter={true} 
+            maxlength={32} 
+            minlength={8}></IonInput>
+          </IonRow>
+          <IonRow>
+            <IonInput 
+            label="Display Name" 
+            helperText="Enter your display name"
+            labelPlacement="floating" 
+            counter={true} 
+            maxlength={32} 
+            minlength={8}></IonInput>
+          </IonRow>
+          <IonRow>
+            <IonCol className="ion-padding-top">
+              <IonButton expand="block" href="/login">Signup</IonButton>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+              <IonText> - This is a pre-release version . <br/> - Data may not persistent. <br/> - Dont input sensitive data.</IonText>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
 
 
 
