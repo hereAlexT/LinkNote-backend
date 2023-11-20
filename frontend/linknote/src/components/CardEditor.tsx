@@ -19,7 +19,7 @@ interface ContainerProps {
 
 }
 
-const EditingCard: React.FC<ContainerProps> = ({ }) => {
+const CardEditor: React.FC<ContainerProps> = ({ }) => {
     return (
         <div>
             <IonCard>
@@ -41,4 +41,4 @@ const EditingCard: React.FC<ContainerProps> = ({ }) => {
         </div>
     )
 }
-export default EditingCard;
+export default CardEditor;

@@ -20,6 +20,7 @@ import {
   IonSearchbar
 } from '@ionic/react';
 import BasicNoteCard from '../components/BasicNoteCard';
+import CardEditor from '../components/CardEditor';
 import { useState, useEffect } from 'react';
 import './timeline.css';
 
@@ -82,6 +83,9 @@ const TimeLine: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonList>
+          <CardEditor />
+          
+        
           {items.map((item, index) => (
             <IonItem key={item}>
               <BasicNoteCard id={String(Math.random())} createdDate={new Date()} body="body" />
