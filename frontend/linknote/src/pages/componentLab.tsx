@@ -3,21 +3,25 @@ import {
   IonPopover, IonList, IonItem
 } from '@ionic/react';
 import { useState } from 'react';
-import EditingCard from '../components/EditingCard'
+import CardEditor from '../components/CardEditor'
 import BasicNoteCard from '../components/BasicNoteCard';
 
 const ComponentLab: React.FC = () => {
   return (
     <IonPage>
-      <IonGrid>
-        <IonRow>
-          <EditingCard />
-        </IonRow>
-        <IonRow>
-          <BasicNoteCard id="1" body="body" createdDate={new Date()}></BasicNoteCard>
-        </IonRow>
+      <IonContent>
+        <IonGrid>
+          <IonRow>
+            <IonCol>
+              <CardEditor />
+            </IonCol>
 
-      </IonGrid>
+          </IonRow>
+          <IonRow>
+            <BasicNoteCard id="1" body="body" createdDate={new Date()}></BasicNoteCard>
+          </IonRow>
+        </IonGrid>
+      </IonContent>
     </IonPage>
   )
 

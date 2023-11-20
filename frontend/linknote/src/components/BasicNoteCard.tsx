@@ -19,10 +19,7 @@ interface ContainerProps {
 }
 
 const BasicNoteCard: React.FC<ContainerProps> = ({ id, createdDate, body }) => {
-    console.log(id)
     return (
-        <div >
-
 
             <IonCard >
                 <IonCardHeader>
@@ -95,7 +92,7 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ id, createdDate, body }) => {
 
                 </IonCardContent>
             </IonCard>
-        </div>
+
     );
 };
 
