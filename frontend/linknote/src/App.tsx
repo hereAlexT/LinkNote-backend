@@ -10,10 +10,11 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { ellipse, square, triangle, cafe } from 'ionicons/icons';
 import Signup from './pages/signup';
 import Tab2 from './pages/login';
 import TimeLine from './pages/timeline';
+import ComponentLab from './pages/componentLab'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -50,6 +51,9 @@ const App: React.FC = () => (
           <Route path="/timeline">
             <TimeLine />
           </Route>
+          <Route exact path="/comlab">
+            <ComponentLab />
+          </Route>
           <Route exact path="/">
             <Redirect to="/signup" />
           </Route>
@@ -67,8 +71,13 @@ const App: React.FC = () => (
             <IonIcon aria-hidden="true" icon={square} />
             <IonLabel>Tab 3</IonLabel>
           </IonTabButton>
+          <IonTabButton tab="ComLab" href="/comlab">
+            <IonIcon aria-hidden="true" icon={cafe} />
+            <IonLabel>ComLab</IonLabel>
+          </IonTabButton>
         </IonTabBar>
       </IonTabs>
+
     </IonReactRouter>
   </IonApp>
 );

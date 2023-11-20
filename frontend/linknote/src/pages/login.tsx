@@ -3,7 +3,6 @@ import {
   IonPopover, IonList, IonItem
 } from '@ionic/react';
 import { useState } from 'react';
-import ExploreContainer from '../components/ExploreContainer';
 import './signup.css';
 
 const Login: React.FC = () => {

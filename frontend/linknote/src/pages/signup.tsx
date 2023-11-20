@@ -58,22 +58,22 @@ const Signup: React.FC = () => {
               onIonBlur={() => markTouched()} />
           </IonRow>
           <IonRow>
-            <IonInput 
-            label="password" 
-            helperText="Type your password"
-            labelPlacement="floating" 
-            counter={true} 
-            maxlength={32} 
-            minlength={8}></IonInput>
+            <IonInput
+              label="password"
+              helperText="Type your password"
+              labelPlacement="floating"
+              counter={true}
+              maxlength={32}
+              minlength={8}></IonInput>
           </IonRow>
           <IonRow>
-            <IonInput 
-            label="Display Name" 
-            helperText="Enter your display name"
-            labelPlacement="floating" 
-            counter={true} 
-            maxlength={32} 
-            minlength={8}></IonInput>
+            <IonInput
+              label="Display Name"
+              helperText="Enter your display name"
+              labelPlacement="floating"
+              counter={true}
+              maxlength={32}
+              minlength={8}></IonInput>
           </IonRow>
           <IonRow>
             <IonCol className="ion-padding-top">
@@ -82,7 +82,7 @@ const Signup: React.FC = () => {
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonText> - This is a pre-release version . <br/> - Data may not persistent. <br/> - Dont input sensitive data.</IonText>
+              <IonText> - This is a pre-release version . <br /> - Data may not persistent. <br /> - Dont input sensitive data.</IonText>
             </IonCol>
           </IonRow>
         </IonGrid>
