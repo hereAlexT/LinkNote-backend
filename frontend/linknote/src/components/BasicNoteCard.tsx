@@ -20,7 +20,6 @@ interface ContainerProps {
 
 const BasicNoteCard: React.FC<ContainerProps> = ({ id, createdDate, body }) => {
     return (
-
             <IonCard >
                 <IonCardHeader>
                 </IonCardHeader>

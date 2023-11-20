@@ -84,8 +84,6 @@ const TimeLine: React.FC = () => {
       <IonContent>
         <IonList>
           <CardEditor />
-          
-        
           {items.map((item, index) => (
             <IonItem key={item}>
               <BasicNoteCard id={String(Math.random())} createdDate={new Date()} body="body" />
