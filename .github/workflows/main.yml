@@ -120,8 +120,8 @@ jobs:
 
 
   image-upload-and-e2e-deployment:
-#    needs:
-#      - server-test
+    needs:
+      - server-test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
