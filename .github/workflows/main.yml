@@ -28,6 +28,7 @@ jobs:
   # 2. Unit Tests
   # 3. Integration Tests
   # 4. Build docker image
+  # 5. Push docker image to docker hub
   build-test:
     runs-on: ubuntu-latest
 
