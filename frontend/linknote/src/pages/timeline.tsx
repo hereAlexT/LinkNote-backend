@@ -16,7 +16,8 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonButton,
-  IonPopover
+  IonPopover,
+  IonSearchbar
 } from '@ionic/react';
 import BasicNoteCard from '../components/BasicNoteCard';
 import { useState, useEffect } from 'react';
@@ -75,7 +76,9 @@ const TimeLine: React.FC = () => {
         <IonToolbar>
           <IonTitle>Timeline</IonTitle>
         </IonToolbar>
-
+        <IonToolbar>
+          <IonSearchbar disabled={true} placeholder="Search function under developing"></IonSearchbar>
+        </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonList>
