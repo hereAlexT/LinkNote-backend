@@ -22,13 +22,19 @@ services:
       - app-network
 
   server:
-    image: linklabs1117/linknote-server:${VERSION}
+    image: ${FULL_IMAGE_NAME}
     depends_on:
       - postgres
     networks:
       - app-network
     ports:
       - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
 
 networks:
   app-network:
