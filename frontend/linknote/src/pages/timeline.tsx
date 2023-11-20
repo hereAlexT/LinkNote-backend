@@ -10,15 +10,46 @@ import {
   IonInfiniteScrollContent,
   IonAvatar,
   IonLabel,
-  IonCard, 
-  IonCardContent, 
-  IonCardHeader, 
-  IonCardSubtitle, 
-  IonCardTitle
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonButton,
+  IonPopover
 } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import BasicNoteCard from '../components/BasicNoteCard';
 import { useState, useEffect } from 'react';
 import './timeline.css';
+
+
+const cardExamples = [
+  {
+    id: "1",
+    createdDate: new Date(),
+    body: "body1"
+  },
+  {
+    id: "2",
+    createdDate: new Date(),
+    body: "body2"
+  },
+  {
+    id: "3",
+    createdDate: new Date(),
+    body: "body3"
+  },
+  {
+    id: "4",
+    createdDate: new Date(),
+    body: "body4"
+  },
+  {
+    id: "5",
+    createdDate: new Date(),
+    body: "body5"
+  },
+]
 
 const TimeLine: React.FC = () => {
   const [items, setItems] = useState<string[]>([]);
@@ -36,33 +67,21 @@ const TimeLine: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
   return (
     <IonPage>
-      {/* <IonHeader>
+
+      <IonHeader>
         <IonToolbar>
           <IonTitle>Timeline</IonTitle>
         </IonToolbar>
-      </IonHeader> */}
 
+      </IonHeader>
       <IonContent>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Timeline</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <IonList>
           {items.map((item, index) => (
-            
             <IonItem key={item}>
-              <IonLabel>{item}</IonLabel>
-              <IonCard>
-                <IonCardHeader>
-                  <IonCardTitle>Card Title</IonCardTitle>
-                  <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                </IonCardHeader>
-
-                <IonCardContent>Here's a small text description for the card content. Nothing more, nothing less.</IonCardContent>
-              </IonCard>
+              <BasicNoteCard id={String(Math.random())} createdDate={new Date()} body="body" />
             </IonItem>
           ))}
         </IonList>
@@ -75,6 +94,11 @@ const TimeLine: React.FC = () => {
           <IonInfiniteScrollContent></IonInfiniteScrollContent>
         </IonInfiniteScroll>
       </IonContent>
+
+
+
+
+
     </IonPage>
   );
 };

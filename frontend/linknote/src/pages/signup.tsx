@@ -37,14 +37,14 @@ const Signup: React.FC = () => {
           <IonTitle>Sign up</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className='ion-padding'>
+      <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Signup</IonTitle>
           </IonToolbar>
         </IonHeader>
 
-        <IonGrid>
+        <IonGrid className='ion-padding'>
           <IonRow>
             <IonInput
               className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
@@ -77,7 +77,7 @@ const Signup: React.FC = () => {
           </IonRow>
           <IonRow>
             <IonCol className="ion-padding-top">
-              <IonButton expand="block" href="/login">Signup</IonButton>
+              <IonButton expand="block" href="/timeline">Signup</IonButton>
             </IonCol>
           </IonRow>
           <IonRow>

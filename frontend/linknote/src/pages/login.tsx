@@ -1,4 +1,7 @@
-import { IonContent, IonHeader, IonInput, IonPage, IonText, IonTitle, IonToolbar, IonButton } from '@ionic/react';
+import {
+  IonContent, IonHeader, IonInput, IonPage, IonText, IonTitle, IonToolbar, IonButton, IonGrid, IonCol, IonRow,
+  IonPopover, IonList, IonItem
+} from '@ionic/react';
 import { useState } from 'react';
 import ExploreContainer from '../components/ExploreContainer';
 import './signup.css';
@@ -32,6 +35,7 @@ const Login: React.FC = () => {
 
   return (
     <IonPage>
+      
       <IonHeader>
         <IonToolbar>
           <IonTitle>Login</IonTitle>
@@ -43,22 +47,44 @@ const Login: React.FC = () => {
             <IonTitle size="large">Login</IonTitle>
           </IonToolbar>
         </IonHeader>
+        <IonGrid className='ion-padding'>
+          <IonCol>
+            <IonInput
+              className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
+              type="email"
+              fill="solid"
+              label="Email"
+              labelPlacement="floating"
+              helperText="Enter a valid email"
+              errorText="Invalid email"
+              onIonInput={(event) => validate(event)}
+              onIonBlur={() => markTouched()}
+            ></IonInput>
+          </IonCol>
+          <IonCol>
+            <IonInput label="password" labelPlacement="floating" counter={true} maxlength={32} minlength={8}></IonInput>
+          </IonCol>
+          <IonCol>
+            <IonButton expand='block' href="/timeline">Login</IonButton>
+          </IonCol>
 
-        <IonInput
-          className={`${isValid && 'ion-valid'} ${isValid === false && 'ion-invalid'} ${isTouched && 'ion-touched'}`}
-          type="email"
-          fill="solid"
-          label="Email"
-          labelPlacement="floating"
-          helperText="Enter a valid email"
-          errorText="Invalid email"
-          onIonInput={(event) => validate(event)}
-          onIonBlur={() => markTouched()}
-        ></IonInput>
-        <IonInput label="password" labelPlacement="floating" counter={true} maxlength={32} minlength={8}></IonInput>
-        <IonButton >Login</IonButton>
+          <IonRow>
+            <IonButton id="popover-button">Open Menu</IonButton>
+            <IonPopover trigger="popover-button" dismissOnSelect={true}>
+              <IonContent>
+                <IonList>
+                  <IonItem button={false}>
+                    Option 1
+                  </IonItem>
+                  <IonItem button={true} detail={false}>
+                    Option 2
+                  </IonItem>
+                </IonList>
+              </IonContent>
+            </IonPopover>
+          </IonRow>
 
-
+        </IonGrid>
 
 
 
