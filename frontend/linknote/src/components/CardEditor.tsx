@@ -9,7 +9,9 @@ import {
     IonRow,
     IonItem, IonList, IonSelect, IonSelectOption, IonPopover, IonContent,
     IonActionSheet,
-    IonGrid
+    IonGrid,
+    IonTextarea
+
 } from '@ionic/react';
 import './BasicNoteCard.css'
 
@@ -17,7 +19,7 @@ interface ContainerProps {
 
 }
 
-const EditingCard: React.FC<ContainerProps> =  ({}) => {
+const EditingCard: React.FC<ContainerProps> = ({ }) => {
     return (
         <div>
             <IonCard>
@@ -25,7 +27,7 @@ const EditingCard: React.FC<ContainerProps> =  ({}) => {
                 <IonCardContent>
                     <IonGrid>
                         <IonRow>
-                            //todo: the text editor
+                            <IonTextarea label="Stacked label" labelPlacement="stacked" placeholder="Enter text"></IonTextarea>
                         </IonRow>
                         <IonRow>
                             <IonCol>
