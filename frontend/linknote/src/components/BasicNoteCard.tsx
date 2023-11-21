@@ -8,8 +8,10 @@ import {
     IonCol,
     IonRow,
     IonItem, IonList, IonSelect, IonSelectOption, IonPopover, IonContent,
-    IonActionSheet
+    IonActionSheet,
+    IonIcon
 } from '@ionic/react';
+import { menuOutline as meanuOutlineIcon } from 'ionicons/icons';
 import './BasicNoteCard.css'
 
 interface ContainerProps {
@@ -20,58 +22,24 @@ interface ContainerProps {
 
 const BasicNoteCard: React.FC<ContainerProps> = ({ id, createdDate, body }) => {
     return (
-            <IonCard >
-                <IonCardHeader>
-                </IonCardHeader>
-                <IonCardContent>
-                    <IonRow>
-                        <IonCol>
-                            <IonButton id={`open-action-sheet-${id}`}>Open</IonButton>
-                            <IonActionSheet
-                                trigger={`open-action-sheet-${id}`}
-                                header="Actions"
-                                buttons={[
-                                    {
-                                        text: 'Edit',
-                                        role: 'destructive',
-                                        data: {
-                                            action: 'delete',
-                                        },
-                                    },
-                                    {
-                                        text: 'Delete',
-                                        data: {
-                                            action: 'share',
-                                        },
-                                    },
-                                    {
-                                        text: 'Cancel',
-                                        role: 'cancel',
-                                        data: {
-                                            action: 'cancel',
-                                        },
-                                    },
-                                ]}
-                            ></IonActionSheet>
-                        </IonCol>
-                    </IonRow>
-                    <IonRow>
-                        <>
-                            <IonButton id={`popover-button-${id}`}>Open Menu</IonButton>
-                            <IonPopover trigger={`popover-button-${id}`} dismissOnSelect={true}>
+        <div style={{ width: "100%", margin: 0, padding: 0 }}>
+            <IonCard className="">
+                <IonCardContent className="ion-no-padding">
+                    <IonRow  className="ion-justify-content-end ion-align-items-start" style={{ padding: 0 }}>
+                        <IonCol size="auto">
+                            <IonButton item-end size="small" fill="clear" id={`note-popover-${id}`}>
+                                <IonIcon slot="icon-only" icon={meanuOutlineIcon}></IonIcon>
+                            </IonButton>
+                            <IonPopover trigger={`note-popover-${id}`} dismissOnSelect={true}>
                                 <IonContent>
                                     <IonList>
                                         <IonItem button={true} detail={false}>
-                                            Option 1
+                                            Edit
                                         </IonItem>
                                         <IonItem button={true} detail={false}>
-                                            Option 2
+                                            Delete
                                         </IonItem>
-                                        <IonItem button={true} id="nested-trigger">
-                                            More options...
-                                        </IonItem>
-
-                                        <IonPopover trigger="nested-trigger" dismissOnSelect={true} side="end">
+                                        <IonPopover trigger="nested-trigger" dismissOnSelect={true} side="start">
                                             <IonContent>
                                                 <IonList>
                                                     <IonItem button={true} detail={false}>
@@ -83,7 +51,7 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ id, createdDate, body }) => {
                                     </IonList>
                                 </IonContent>
                             </IonPopover>
-                        </>
+                        </IonCol>
                     </IonRow>
 
                     <IonRow> {body}</IonRow>
@@ -91,6 +59,7 @@ const BasicNoteCard: React.FC<ContainerProps> = ({ id, createdDate, body }) => {
 
                 </IonCardContent>
             </IonCard>
+        </div>
 
     );
 };

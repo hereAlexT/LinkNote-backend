@@ -27,17 +27,11 @@ const CardEditor: React.FC<ContainerProps> = ({ }) => {
                 <IonCardContent>
                     <IonGrid>
                         <IonRow>
-                            <IonTextarea
-                                label="Notes here"
-                                labelPlacement="stacked"
-                                placeholder="What just happened?"
-                            />
-
+                            <IonTextarea label="What just heppened?" label-placement="floating" rows={5}></IonTextarea>
                         </IonRow>
-                        <IonRow>
-                     
-                            <IonCol size="12" className="ion-text-right">
-                                <IonButton item-end>Submit</IonButton>
+                        <IonRow class="ion-justify-content-end">
+                            <IonCol size="auto">
+                                <IonButton item-end size="small">Submit</IonButton>
                             </IonCol>
                         </IonRow>
                     </IonGrid>
