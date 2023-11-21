@@ -51,9 +51,13 @@ jobs:
       - name: Extract version from branch name and create full version
         id: set_version
         run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          VERSION=$(echo ${{ github.base_ref }} | sed 's/refs\/heads\/release\/v//')
+          else
           VERSION=$(echo $GITHUB_REF | sed 's/refs\/heads\/release\/v//')
+          fi
           CURRENT_DATE=$(date +'%Y%m%d')
-          FULL_VERSION="${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
+          FULL_VERSION="pr-${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
           echo "FULL_VERSION=${FULL_VERSION}" >> $GITHUB_ENV
           echo "FULL_IMAGE_NAME=linklabs1117/linknote-server:${FULL_VERSION}" >> $GITHUB_ENV
 
@@ -133,11 +137,15 @@ jobs:
       - name: Extract version from branch name and create full version
         id: set_version
         run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          VERSION=$(echo ${{ github.base_ref }} | sed 's/refs\/heads\/release\/v//')
+          else
           VERSION=$(echo $GITHUB_REF | sed 's/refs\/heads\/release\/v//')
+          fi
           CURRENT_DATE=$(date +'%Y%m%d')
-          FULL_VERSION="${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
+          FULL_VERSION="pr-${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
           echo "FULL_VERSION=${FULL_VERSION}" >> $GITHUB_ENV
-          echo "FULL_IMAGE_NAME=linklabs1117/linknote-server:$FULL_VERSION" >> $GITHUB_ENV
+          echo "FULL_IMAGE_NAME=linklabs1117/linknote-server:${FULL_VERSION}" >> $GITHUB_ENV
 
 
       - name: Set up JDK 21
