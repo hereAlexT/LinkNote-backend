@@ -18,11 +18,11 @@ import './BasicNoteCard.css';
 import { Note} from '../shared/interfaces/note.interfaces';
 interface ContainerProps {
     onCreateNote: (noteContent: Note) => void;
+    note?: Note;
 }
 
-const CardEditor: React.FC<ContainerProps> = ({ onCreateNote }) => {
+const CardEditor: React.FC<ContainerProps> = ({ onCreateNote, note }) => {
     const [content, setContent] = useState('');
-
     const handleInput = (event: CustomEvent) => {
         const value = event.detail.value;
         setContent(value);
@@ -33,6 +33,13 @@ const CardEditor: React.FC<ContainerProps> = ({ onCreateNote }) => {
             createdDate: new Date(),
             body: content
         }
+        console.log("let's see note exist or not")
+        console.log(note);
+        if (note) {
+            newNote.noteId = note.noteId;
+        }
+        console.log(newNote);
+
         onCreateNote(newNote);
         setContent(' ');
     }

@@ -17,13 +17,20 @@ import {
   IonCardTitle,
   IonButton,
   IonPopover,
-  IonSearchbar
+  IonSearchbar,
+  IonAlert,
+  useIonAlert,
+  useIonModal,
+  IonModal,
+  IonIcon,
+  IonButtons
 } from '@ionic/react';
 import BasicNoteCard from '../components/BasicNoteCard';
 import CardEditor from '../components/CardEditor';
 import { useState, useEffect } from 'react';
 import './timeline.css';
-import { Note, NoteId} from '../shared/interfaces/note.interfaces';
+import { Note, NoteId } from '../shared/interfaces/note.interfaces';
+import DialogCardEditor from '../components/DialogCardEditor';
 
 const defaultCards: Note[] = [
   // {
@@ -56,31 +63,44 @@ const defaultCards: Note[] = [
 const TimeLine: React.FC = () => {
   const [cards, setCards] = useState<Note[]>(defaultCards);
 
-  // const generateItems = () => {
-  //   const newCards = [];
-  //   for (let i = 0; i < 50; i++) {
-  //     newCards.push(`Item ${1 + cards.length + i}`);
-  //   }
-  //   setCards([...cards, ...newCards]);
-  // };
 
-  // useEffect(() => {
-  //   generateItems();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  const handleOnCreateNote = (note: Note) => {
+    // search on cards, check if noteId already exists
+    if (cards.find(card => card.noteId === note.noteId)) {
+      console.log("Note already exists, update the notes")
+      // update the card in cards where card.noteId = note.noteId and use setCards to update State
+      const updateCards = cards.map(card => {
+        if (card.noteId === note.noteId) {
+          return note;
+        }
+        else {
+          return card;
+        }
+      });
+      setCards(updateCards);
+    }
 
-  const handleOnCreateNote = (noteContent: Note) => {
-    setCards([...cards, noteContent]);
+    else {
+      setCards([...cards, note]);
+    }
   }
+
 
   const handleOnDeleteNote = (noteId: NoteId) => {
     const updateCards = cards.filter(card => card.noteId !== noteId);
     setCards(updateCards);
   }
 
-  const handleOnEditNote = (noteId: NoteId) => {
-    console.log("Request to edit:" + noteId)
-  }
+
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [selectedNote, setSelectedNote] = useState<Note | undefined>(undefined);
+
+
+const handleOnEditNote = (noteId: NoteId) => {
+  const foundNote = cards.find(card => card.noteId === noteId);
+  setSelectedNote(foundNote || undefined);
+  setIsEditorOpen(true);
+};
 
 
   return (
@@ -101,26 +121,33 @@ const TimeLine: React.FC = () => {
 
           {cards.map((card, index) => (
             <IonItem key={card.noteId} button={true} detail={false}>
-              <BasicNoteCard 
-              noteId={card.noteId} 
-              createdDate={card.createdDate} 
-              body={card.body} 
-              onDeleteNote={handleOnDeleteNote}
-              onEditNote={handleOnEditNote}
+              <BasicNoteCard
+                noteId={card.noteId}
+                createdDate={card.createdDate}
+                body={card.body}
+                onDeleteNote={handleOnDeleteNote}
+                onEditNote={handleOnEditNote}
               />
             </IonItem>
           ))}
         </IonList>
-        {/* <IonInfiniteScroll
-          onIonInfinite={(ev) => {
-            generateItems();
-            setTimeout(() => ev.target.complete(), 500);
-          }}
-        >
-          <IonInfiniteScrollContent></IonInfiniteScrollContent>
-        </IonInfiniteScroll> */}
+  
       </IonContent>
-    </IonPage>
+      <IonModal isOpen={isEditorOpen}>
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Edit Memo</IonTitle>
+            <IonButtons slot="end">
+              <IonButton onClick={() => setIsEditorOpen(false)}>Close</IonButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          <CardEditor onCreateNote={handleOnCreateNote} note={selectedNote}/>
+        </IonContent>
+      </IonModal>
+    </IonPage >
+
   );
 };
 
