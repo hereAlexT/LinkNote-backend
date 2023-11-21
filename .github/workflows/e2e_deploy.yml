@@ -17,7 +17,7 @@
 ## 6. Transfer Docker-compose to host
 ## 7. Run docker-compose on host
 
-name: LinkNote Workflow
+name: E2E Test and Deployment
 on:
   push:
     branches:
