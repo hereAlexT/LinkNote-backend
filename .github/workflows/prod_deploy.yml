@@ -44,7 +44,6 @@ on:
 
 jobs:
   server-test:
-    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -127,8 +126,6 @@ jobs:
 
   docker-image-upload-and-prod-deployment:
     if: ${{ github.event_name == 'push' }}
-    needs:
-      - server-test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
