@@ -1,0 +1,4 @@
+spring:
+  profiles:
+    ## MODE should be in one of 'prod', 'dev', 'test'
+    active: ${SPRING_PROFILES_ACTIVE}

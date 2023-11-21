@@ -1,0 +1,20 @@
+logging:
+  level:
+    root: info
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/link_db
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+app:
+  snowflakeId:
+    nodeId: 1
+    machineId: 1
