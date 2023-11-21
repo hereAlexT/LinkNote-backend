@@ -22,7 +22,7 @@ interface ContainerProps {
 }
 
 const CardEditor: React.FC<ContainerProps> = ({ onCreateNote, note }) => {
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState(note?.body || '');
     const handleInput = (event: CustomEvent) => {
         const value = event.detail.value;
         setContent(value);
@@ -39,7 +39,6 @@ const CardEditor: React.FC<ContainerProps> = ({ onCreateNote, note }) => {
             newNote.noteId = note.noteId;
         }
         console.log(newNote);
-
         onCreateNote(newNote);
         setContent(' ');
     }
