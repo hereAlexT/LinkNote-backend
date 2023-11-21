@@ -127,14 +127,14 @@ jobs:
       - uses: actions/checkout@v4
 
       # Build (prod)
-#      - name: Extract version from branch name and create full version
-#        id: set_version
-#        run: |
-#          VERSION=$(echo $GITHUB_REF | sed 's/refs\/heads\/release\/v//')
-#          CURRENT_DATE=$(date +'%Y%m%d')
-#          FULL_VERSION="${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
-#          echo "FULL_VERSION=${FULL_VERSION}" >> $GITHUB_ENV
-#          echo "FULL_IMAGE_NAME=linklabs1117/linknote-server:$FULL_VERSION" >> $GITHUB_ENV
+      - name: Extract version from branch name and create full version
+        id: set_version
+        run: |
+          VERSION=$(echo $GITHUB_REF | sed 's/refs\/heads\/release\/v//')
+          CURRENT_DATE=$(date +'%Y%m%d')
+          FULL_VERSION="${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
+          echo "FULL_VERSION=${FULL_VERSION}" >> $GITHUB_ENV
+          echo "FULL_IMAGE_NAME=linklabs1117/linknote-server:$FULL_VERSION" >> $GITHUB_ENV
           
 
       - name: Set up JDK 21
