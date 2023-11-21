@@ -41,7 +41,7 @@ import './App.css'
 setupIonicReact();
 
 const App: React.FC = () => (
-  <IonApp>
+  <IonApp className='max-w-2xl mx-auto w-full app-background'>
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
