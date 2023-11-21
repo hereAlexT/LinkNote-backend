@@ -15,7 +15,7 @@ import {
 } from '@ionic/react';
 import { useState, ChangeEvent } from 'react';
 import './BasicNoteCard.css';
-import { Note} from '../shared/interfaces/note.interfaces';
+import { Note} from '../shared/interfaces/Note.interfaces';
 interface ContainerProps {
     onCreateNote: (noteContent: Note) => void;
     note?: Note;

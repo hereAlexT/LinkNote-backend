@@ -16,10 +16,10 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, square, triangle, cafe } from 'ionicons/icons';
-import Signup from './pages/signup';
-import Tab2 from './pages/login';
-import TimeLine from './pages/timeline';
-import ComponentLab from './pages/componentLab'
+import Signup from './pages/Signup';
+import Tab2 from './pages/Login';
+import TimeLine from './pages/Timeline';
+import ComponentLab from './pages/ComponentLab'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -84,7 +84,7 @@ const App: React.FC = () => (
             <IonIcon aria-hidden="true" icon={ellipse} />
             <IonLabel>Login</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/timeline">
+          <IonTabButton tab="tab3xw" href="/timeline">
             <IonIcon aria-hidden="true" icon={square} />
             <IonLabel>Tab 3</IonLabel>
           </IonTabButton>

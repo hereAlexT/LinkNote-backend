@@ -30,7 +30,7 @@ import BasicNoteCard from '../components/BasicNoteCard';
 import CardEditor from '../components/CardEditor';
 import { useState, useEffect } from 'react';
 import './timeline.css';
-import { Note, NoteId } from '../shared/interfaces/note.interfaces';
+import { Note, NoteId } from '../shared/interfaces/Note.interfaces';
 import DialogCardEditor from '../components/DialogCardEditor';
 
 const defaultCards: Note[] = [

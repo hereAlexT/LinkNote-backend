@@ -3,7 +3,7 @@ import {
   IonPopover, IonList, IonItem
 } from '@ionic/react';
 import { useState } from 'react';
-import './signup.css';
+import './Signup.css';
 
 const Login: React.FC = () => {
   const [isTouched, setIsTouched] = useState(false);

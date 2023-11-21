@@ -17,7 +17,7 @@ import {
     IonIcon
 } from '@ionic/react';
 import { menuOutline as meanuOutlineIcon } from 'ionicons/icons';
-import { Note, NoteId } from '../shared/interfaces/note.interfaces';
+import { Note, NoteId } from '../shared/interfaces/Note.interfaces';
 import './BasicNoteCard.css'
 
 interface ContainerProps {
