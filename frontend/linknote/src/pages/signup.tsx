@@ -1,6 +1,5 @@
 import { IonContent, IonHeader, IonInput, IonPage, IonText, IonTitle, IonToolbar, IonButton, IonGrid, IonCol, IonRow } from '@ionic/react';
 import { useState } from 'react';
-import ExploreContainer from '../components/ExploreContainer';
 import './signup.css';
 
 const Signup: React.FC = () => {
@@ -43,7 +42,6 @@ const Signup: React.FC = () => {
             <IonTitle size="large">Signup</IonTitle>
           </IonToolbar>
         </IonHeader>
-
         <IonGrid className='ion-padding'>
           <IonRow>
             <IonInput

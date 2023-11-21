@@ -22,10 +22,10 @@ interface ContainerProps {
 
 const BasicNoteCard: React.FC<ContainerProps> = ({ id, createdDate, body }) => {
     return (
-        <div style={{ width: "100%", margin: 0, padding: 0 }}>
-            <IonCard className="">
-                <IonCardContent className="ion-no-padding">
-                    <IonRow  className="ion-justify-content-end ion-align-items-start" style={{ padding: 0 }}>
+        <div className="m-0 p-0 w-full">
+            <IonCard >
+                <IonCardContent className="">
+                    <IonRow className="ion-justify-content-end ion-align-items-start" style={{ padding: 0 }}>
                         <IonCol size="auto">
                             <IonButton item-end size="small" fill="clear" id={`note-popover-${id}`}>
                                 <IonIcon slot="icon-only" icon={meanuOutlineIcon}></IonIcon>

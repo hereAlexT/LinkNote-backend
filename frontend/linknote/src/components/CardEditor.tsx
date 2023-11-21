@@ -21,7 +21,7 @@ interface ContainerProps {
 
 const CardEditor: React.FC<ContainerProps> = ({ }) => {
     return (
-        <div>
+        <div className="m-0 p-0 w-full">
             <IonCard>
                 <IonCardHeader></IonCardHeader>
                 <IonCardContent>

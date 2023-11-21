@@ -20,6 +20,12 @@ const ComponentLab: React.FC = () => {
           <IonRow>
             <BasicNoteCard id="1" body="body" createdDate={new Date()}></BasicNoteCard>
           </IonRow>
+          <IonRow>
+
+            <h1 className="text-3xl font-bold underline">
+              Hello world!
+            </h1>
+          </IonRow>
         </IonGrid>
       </IonContent>
     </IonPage>
