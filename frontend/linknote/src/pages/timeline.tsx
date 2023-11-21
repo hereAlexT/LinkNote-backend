@@ -23,7 +23,8 @@ import {
   useIonModal,
   IonModal,
   IonIcon,
-  IonButtons
+  IonButtons,
+  IonMenuButton
 } from '@ionic/react';
 import BasicNoteCard from '../components/BasicNoteCard';
 import CardEditor from '../components/CardEditor';
@@ -96,21 +97,24 @@ const TimeLine: React.FC = () => {
   const [selectedNote, setSelectedNote] = useState<Note | undefined>(undefined);
 
 
-const handleOnEditNote = (noteId: NoteId) => {
-  const foundNote = cards.find(card => card.noteId === noteId);
-  setSelectedNote(foundNote || undefined);
-  setIsEditorOpen(true);
-};
+  const handleOnEditNote = (noteId: NoteId) => {
+    const foundNote = cards.find(card => card.noteId === noteId);
+    setSelectedNote(foundNote || undefined);
+    setIsEditorOpen(true);
+  };
 
 
   return (
     <IonPage>
       <IonHeader>
+
         <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton />
+            
+          </IonButtons>
           <IonTitle>Timeline</IonTitle>
-        </IonToolbar>
-        <IonToolbar>
-          <IonSearchbar disabled={true} placeholder="Search function under developing"></IonSearchbar>
+          {/* <IonSearchbar disabled={true} placeholder="Search function under developing"></IonSearchbar> */}
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -131,7 +135,7 @@ const handleOnEditNote = (noteId: NoteId) => {
             </IonItem>
           ))}
         </IonList>
-  
+
       </IonContent>
       <IonModal isOpen={isEditorOpen}>
         <IonHeader>
@@ -143,7 +147,7 @@ const handleOnEditNote = (noteId: NoteId) => {
           </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
-          <CardEditor onCreateNote={handleOnCreateNote} note={selectedNote}/>
+          <CardEditor onCreateNote={handleOnCreateNote} note={selectedNote} />
         </IonContent>
       </IonModal>
     </IonPage >

@@ -7,7 +7,12 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
-  setupIonicReact
+  setupIonicReact,
+  IonMenu,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, square, triangle, cafe } from 'ionicons/icons';
@@ -41,10 +46,19 @@ import './App.css'
 setupIonicReact();
 
 const App: React.FC = () => (
+
   <IonApp className='max-w-2xl mx-auto w-full app-background'>
     <IonReactRouter>
+      <IonMenu contentId="main-content">
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Menu Content</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">This is the menu content.</IonContent>
+      </IonMenu>
       <IonTabs>
-        <IonRouterOutlet>
+        <IonRouterOutlet id="main-content">
           <Route exact path="/signup">
             <Signup />
           </Route>

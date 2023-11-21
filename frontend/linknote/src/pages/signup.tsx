@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonInput, IonPage, IonText, IonTitle, IonToolbar, IonButton, IonGrid, IonCol, IonRow } from '@ionic/react';
+import { IonContent, IonHeader, IonInput, IonPage, IonText, IonTitle, IonToolbar, IonButton, IonGrid, IonCol, IonRow, IonButtons,IonMenuButton } from '@ionic/react';
 import { useState } from 'react';
 import './signup.css';
 
@@ -33,6 +33,9 @@ const Signup: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          {/* <IonButtons slot="start">
+            <IonMenuButton />
+          </IonButtons> */}
           <IonTitle>Sign up</IonTitle>
         </IonToolbar>
       </IonHeader>
