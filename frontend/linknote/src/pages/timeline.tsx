@@ -105,7 +105,7 @@ const TimeLine: React.FC = () => {
 
 
   return (
-    <IonPage>
+    <IonPage id="main-content">
       <IonHeader>
 
         <IonToolbar>
