@@ -71,15 +71,11 @@ const TimeLine: React.FC = () => {
 
   const handleOnCreateNote = (noteContent: Note) => {
     setCards([...cards, noteContent]);
-    console.log(noteContent);
   }
 
   const handleOnDeleteNote = (noteId: NoteId) => {
-    console.log("Request to delete: " + noteId);
-    console.log(cards)
     const updateCards = cards.filter(card => card.noteId !== noteId);
     setCards(updateCards);
-    console.log(cards)
   }
 
   const handleOnEditNote = (noteId: NoteId) => {
