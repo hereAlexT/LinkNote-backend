@@ -18,7 +18,7 @@ const ComponentLab: React.FC = () => {
 
           </IonRow>
           <IonRow>
-            <BasicNoteCard id="1" body="body" createdDate={new Date()}></BasicNoteCard>
+            <BasicNoteCard noteId="1" body="body" createdDate={new Date()}></BasicNoteCard>
           </IonRow>
           <IonRow>
 

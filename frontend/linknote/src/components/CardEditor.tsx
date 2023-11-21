@@ -15,7 +15,7 @@ import {
 } from '@ionic/react';
 import { useState, ChangeEvent } from 'react';
 import './BasicNoteCard.css';
-import { Note } from '../shared/interfaces/note.interfaces';
+import { Note} from '../shared/interfaces/note.interfaces';
 interface ContainerProps {
     onCreateNote: (noteContent: Note) => void;
 }
@@ -29,7 +29,7 @@ const CardEditor: React.FC<ContainerProps> = ({ onCreateNote }) => {
     };
     const submitNote = () => {
         const newNote: Note = {
-            id: (Math.random() + 1).toString(36).substring(7),
+            noteId: (Math.random() + 1).toString(36).substring(7),
             createdDate: new Date(),
             body: content
         }

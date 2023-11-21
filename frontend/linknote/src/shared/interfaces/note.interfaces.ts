@@ -1,7 +1,7 @@
-type UserId = string;
+export type NoteId = string;
 
 export interface Note {
-    id: string;
+    noteId: NoteId;
     createdDate: Date;
     body: string;
 }

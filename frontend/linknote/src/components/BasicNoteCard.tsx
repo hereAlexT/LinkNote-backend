@@ -7,47 +7,46 @@ import {
     IonButton,
     IonCol,
     IonRow,
-    IonItem, IonList, IonSelect, IonSelectOption, IonPopover, IonContent,
+    IonItem, 
+    IonList, 
+    IonSelect, 
+    IonSelectOption, 
+    IonPopover, 
+    IonContent,
     IonActionSheet,
     IonIcon
 } from '@ionic/react';
 import { menuOutline as meanuOutlineIcon } from 'ionicons/icons';
+import { Note, NoteId } from '../shared/interfaces/note.interfaces';
 import './BasicNoteCard.css'
 
 interface ContainerProps {
-    id: string;
+    noteId: NoteId;
     createdDate: Date;
     body: string;
+    onDeleteNote (noteId: NoteId): void;
+    onEditNote (noteId: NoteId ) : void;
 }
 
-const BasicNoteCard: React.FC<ContainerProps> = ({ id, createdDate, body }) => {
+const BasicNoteCard: React.FC<ContainerProps> = ({ noteId, createdDate, body , onDeleteNote, onEditNote}) => {
     return (
         <div className="m-0 p-0 w-full">
             <IonCard >
                 <IonCardContent className="">
                     <IonRow className="ion-justify-content-end ion-align-items-start" style={{ padding: 0 }}>
                         <IonCol size="auto">
-                            <IonButton item-end size="small" fill="clear" id={`note-popover-${id}`}>
+                            <IonButton item-end size="small" fill="clear" id={`note-popover-${noteId}`}>
                                 <IonIcon slot="icon-only" icon={meanuOutlineIcon}></IonIcon>
                             </IonButton>
-                            <IonPopover trigger={`note-popover-${id}`} dismissOnSelect={true}>
+                            <IonPopover trigger={`note-popover-${noteId}`} dismissOnSelect={true}>
                                 <IonContent>
                                     <IonList>
-                                        <IonItem button={true} detail={false}>
+                                        <IonItem button={true} detail={false} onClick={((e) => onEditNote(noteId))}>
                                             Edit
                                         </IonItem>
-                                        <IonItem button={true} detail={false}>
+                                        <IonItem button={true} detail={false} onClick={(e) => onDeleteNote(noteId)}>
                                             Delete
                                         </IonItem>
-                                        <IonPopover trigger="nested-trigger" dismissOnSelect={true} side="start">
-                                            <IonContent>
-                                                <IonList>
-                                                    <IonItem button={true} detail={false}>
-                                                        Nested option
-                                                    </IonItem>
-                                                </IonList>
-                                            </IonContent>
-                                        </IonPopover>
                                     </IonList>
                                 </IonContent>
                             </IonPopover>

@@ -23,34 +23,34 @@ import BasicNoteCard from '../components/BasicNoteCard';
 import CardEditor from '../components/CardEditor';
 import { useState, useEffect } from 'react';
 import './timeline.css';
-import { Note } from '../shared/interfaces/note.interfaces';
+import { Note, NoteId} from '../shared/interfaces/note.interfaces';
 
 const defaultCards: Note[] = [
-  {
-    id: "1",
-    createdDate: new Date("2023-01-01T00:00:00Z"),
-    body: "This is the body of note 1"
-  },
-  {
-    id: "2",
-    createdDate: new Date("2023-01-02T00:00:00Z"),
-    body: "This is the body of note 2"
-  },
-  {
-    id: "3",
-    createdDate: new Date("2023-01-03T00:00:00Z"),
-    body: "This is the body of note 3"
-  },
-  {
-    id: "4",
-    createdDate: new Date("2023-01-04T00:00:00Z"),
-    body: "This is the body of note 4"
-  },
-  {
-    id: "5",
-    createdDate: new Date("2023-01-05T00:00:00Z"),
-    body: "This is the body of note 5"
-  },
+  // {
+  //   noteId: "1",
+  //   createdDate: new Date("2023-01-01T00:00:00Z"),
+  //   body: "This is the body of note 1"
+  // },
+  // {
+  //   noteId: "2",
+  //   createdDate: new Date("2023-01-02T00:00:00Z"),
+  //   body: "This is the body of note 2"
+  // },
+  // {
+  //   noteId: "3",
+  //   createdDate: new Date("2023-01-03T00:00:00Z"),
+  //   body: "This is the body of note 3"
+  // },
+  // {
+  //   noteId: "4",
+  //   createdDate: new Date("2023-01-04T00:00:00Z"),
+  //   body: "This is the body of note 4"
+  // },
+  // {
+  //   noteId: "5",
+  //   createdDate: new Date("2023-01-05T00:00:00Z"),
+  //   body: "This is the body of note 5"
+  // },
 ];
 
 const TimeLine: React.FC = () => {
@@ -70,8 +70,20 @@ const TimeLine: React.FC = () => {
   // }, []);
 
   const handleOnCreateNote = (noteContent: Note) => {
-    setCards([...cards, noteContent])
-    console.log(noteContent)
+    setCards([...cards, noteContent]);
+    console.log(noteContent);
+  }
+
+  const handleOnDeleteNote = (noteId: NoteId) => {
+    console.log("Request to delete: " + noteId);
+    console.log(cards)
+    const updateCards = cards.filter(card => card.noteId !== noteId);
+    setCards(updateCards);
+    console.log(cards)
+  }
+
+  const handleOnEditNote = (noteId: NoteId) => {
+    console.log("Request to edit:" + noteId)
   }
 
 
@@ -92,8 +104,14 @@ const TimeLine: React.FC = () => {
           </IonItem>
 
           {cards.map((card, index) => (
-            <IonItem key={card.id} button={true} detail={false}>
-              <BasicNoteCard id={card.id} createdDate={card.createdDate} body={card.body} />
+            <IonItem key={card.noteId} button={true} detail={false}>
+              <BasicNoteCard 
+              noteId={card.noteId} 
+              createdDate={card.createdDate} 
+              body={card.body} 
+              onDeleteNote={handleOnDeleteNote}
+              onEditNote={handleOnEditNote}
+              />
             </IonItem>
           ))}
         </IonList>
