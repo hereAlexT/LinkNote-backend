@@ -225,7 +225,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           FULL_IMAGE_NAME: ${{ env.FULL_IMAGE_NAME }}
           APP_VERSION: ${{ env.FULL_VERSION }}
-          APP_VERSION: ${{ env.FULL_VERSION }}
+
 
         run: |
           
