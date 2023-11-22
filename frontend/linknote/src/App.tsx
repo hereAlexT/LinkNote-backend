@@ -47,27 +47,29 @@ import Login from './pages/Login';
 import TimeLine from './pages/Timeline';
 import ComponentLab from './pages/ComponentLab'
 import Menu from './components/Menu';
+import { AuthProvider } from './contexts/AuthContext';
 
 setupIonicReact();
 
 const App: React.FC = () => (
-
-  <IonApp className='max-w-3xl mx-auto w-full app-background'>
-    {/* <IonApp className=''> */}
-    <IonReactRouter>
-      <IonSplitPane contentId="main">
-        <Menu />
-        <IonRouterOutlet id="main">
-          <Route path="/" component={Signup} exact={true} />
-          <Route path="/tabs" render={() => <MainTabs />} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />
-          <Route path="/timeline" component={TimeLine} />
-          <Route path="/comlab" component={ComponentLab} />
-        </IonRouterOutlet>
-      </IonSplitPane>
-    </IonReactRouter>
-  </IonApp>
+  <AuthProvider>
+    <IonApp className='max-w-3xl mx-auto w-full app-background'>
+      {/* <IonApp className=''> */}
+      <IonReactRouter>
+        <IonSplitPane contentId="main">
+          <Menu />
+          <IonRouterOutlet id="main">
+            <Route path="/" component={Signup} exact={true} />
+            <Route path="/tabs" render={() => <MainTabs />} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/login" component={Login} />
+            <Route path="/timeline" component={TimeLine} />
+            <Route path="/comlab" component={ComponentLab} />
+          </IonRouterOutlet>
+        </IonSplitPane>
+      </IonReactRouter>
+    </IonApp>
+  </AuthProvider>
 );
 
 export default App;

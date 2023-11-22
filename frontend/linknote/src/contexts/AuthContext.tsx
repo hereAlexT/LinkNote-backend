@@ -1,0 +1,84 @@
+import { createContext, useContext, useReducer, ReactNode } from "react"
+import { User } from "../shared/interfaces/User.interfaces";
+
+
+const AuthContext = createContext({
+    user: null,
+    isAuthenticated: false,
+    login: (email: string, password: string): boolean => { return false; },
+    logout: () => { },
+});
+
+const initialState = {
+    user: null,
+    isAuthenticated: false,
+}
+
+interface State {
+    user: any;
+}
+
+interface Action {
+    type: string;
+    payload?: any;
+}
+
+function reducer(state: State, action: Action) {
+    switch (action.type) {
+        case "login":
+            return { ...state, user: action.payload, isAuthenticated: true }
+        case "logout":
+            return { ...state, user: null, isAuthenticated: false };
+        default:
+            throw new Error("Unknown action type");
+    }
+}
+
+
+const TEST_USER = {
+    userId: "123",
+    displayName: "John Doe",
+    password: "password",
+    email: "johndoe@example.com",
+    createdDate: new Date(),
+};
+
+interface AuthProviderProps {
+    children: ReactNode;
+}
+
+function AuthProvider({ children }: AuthProviderProps) {
+    const [{ user, isAuthenticated }, dispatch] = useReducer(
+        reducer,
+        initialState);
+
+    function login(email: string, password: string): boolean {
+        console.log("login function called " + email + " + " + password)
+        if (email === TEST_USER.email && password === TEST_USER.password) {
+            dispatch({ type: "login", payload: TEST_USER });
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function logout() {
+        dispatch({ type: "logout" });
+    }
+
+
+    return (
+        <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    )
+
+}
+
+function useAuth() {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error("useAuth must be used within a AuthProvider");
+    }
+    return context;
+}
+export { AuthProvider, useAuth }

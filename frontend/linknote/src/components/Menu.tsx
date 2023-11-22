@@ -22,11 +22,11 @@ const routes = {
     appPages: [
         { title: 'Login', path: '/tabs/login', icon: logInIcon },
         { title: 'Signup', path: '/tabs/signup', icon:  addIcon },
-        { title: 'Timeline', path: '/tabs/timeline', icon: 'time' },
+        { title: 'Timeline', path: '/tabs/timeline', icon: flaskIcon },
         { title: 'ComponentLab', path: '/tabs/comlab', icon: flaskIcon },
     ],
     loggedInPages: [
-        { title: 'Logout', path: '/tabs/logout', icon: 'log-out' },
+        { title: 'Logout', path: '/tabs/login', icon: 'log-out' },
     ],
     loggedOutPages: [
         { title: 'Login', path: '/tabs/login', icon: 'log-in' },
@@ -67,14 +67,14 @@ const Menu: React.FC<MenuProps> = ({ }) => {
                     <IonListHeader>Menu</IonListHeader>
                     {renderlistItems(routes.appPages)}
                 </IonList>
-                <IonList>
+                {/* <IonList>
                     <IonListHeader>Account</IonListHeader>
                     {renderlistItems(routes.loggedInPages)}
                 </IonList>
                 <IonList>
                     <IonListHeader>Account</IonListHeader>
                     {renderlistItems(routes.loggedOutPages)}
-                </IonList>
+                </IonList> */}
             </IonContent>
 
 
