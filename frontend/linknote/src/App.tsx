@@ -16,7 +16,7 @@ import {
   IonSplitPane
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle, cafe } from 'ionicons/icons';
+
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -38,7 +38,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-
 import './App.css'
 
 /* Import Components */
@@ -49,23 +48,22 @@ import TimeLine from './pages/Timeline';
 import ComponentLab from './pages/ComponentLab'
 import Menu from './components/Menu';
 
-
 setupIonicReact();
 
 const App: React.FC = () => (
 
-  // <IonApp className='max-w-2xl mx-auto w-full app-background'>
-  <IonApp className=''>
+  <IonApp className='max-w-3xl mx-auto w-full app-background'>
+    {/* <IonApp className=''> */}
     <IonReactRouter>
       <IonSplitPane contentId="main">
         <Menu />
         <IonRouterOutlet id="main">
-        <Route path="/" component={Signup} exact={true} />
-        <Route path="/tabs" render={() => <MainTabs />} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />
-        <Route path="/timeline" component={TimeLine} />
-        <Route path="/comlab" component={ComponentLab} />
+          <Route path="/" component={Signup} exact={true} />
+          <Route path="/tabs" render={() => <MainTabs />} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/login" component={Login} />
+          <Route path="/timeline" component={TimeLine} />
+          <Route path="/comlab" component={ComponentLab} />
         </IonRouterOutlet>
       </IonSplitPane>
     </IonReactRouter>
