@@ -80,6 +80,7 @@ jobs:
         env:
           SPRING_PROFILES_ACTIVE: test
           VERSION: ${{ env.FULL_VERSION }}
+          APP_VERSION: ${{ env.FULL_VERSION }}
 
       ### Switch to Java-17 and run the rest assure test
       - name: Set up JDK 17
@@ -181,6 +182,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           FULL_IMAGE_NAME: ${{ env.FULL_IMAGE_NAME }}
+          APP_VERSION: ${{ env.FULL_VERSION }}
         run: |
           cat << EOF > .env
           FULL_IMAGE_NAME=${FULL_IMAGE_NAME}
@@ -204,6 +206,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           FULL_IMAGE_NAME: ${{ env.FULL_IMAGE_NAME }}
+          APP_VERSION: ${{ env.FULL_VERSION }}
 
         run: |
           

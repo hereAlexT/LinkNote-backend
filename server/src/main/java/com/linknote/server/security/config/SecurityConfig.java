@@ -55,7 +55,7 @@ public class SecurityConfig {
                 })
                 .and().csrf().disable()//todo: set csrf() in prod: ignoreingRequestMatch
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**").permitAll() //authorized all the target here
+                .requestMatchers("/api/v1/auth/**", "/api/v1/health").permitAll() //authorized all the target here
 //                .requestMatchers(SWAGGER_PATHS).permitAll()
                 .anyRequest().authenticated()
 
