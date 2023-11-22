@@ -51,7 +51,7 @@ jobs:
         run: |
           VERSION=$(echo $GITHUB_REF | sed 's/refs\/heads\/release\/v//')
           CURRENT_DATE=$(date +'%Y%m%d')
-          FULL_VERSION="${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
+          FULL_VERSION="candidate-${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
           echo "FULL_VERSION=${FULL_VERSION}" >> $GITHUB_ENV
           echo "FULL_IMAGE_NAME=linklabs1117/linknote-server:${FULL_VERSION}" >> $GITHUB_ENV
 
@@ -133,7 +133,7 @@ jobs:
         run: |
           VERSION=$(echo $GITHUB_REF | sed 's/refs\/heads\/release\/v//')
           CURRENT_DATE=$(date +'%Y%m%d')
-          FULL_VERSION="${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
+          FULL_VERSION="candidate-${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
           echo "FULL_VERSION=${FULL_VERSION}" >> $GITHUB_ENV
           echo "FULL_IMAGE_NAME=linklabs1117/linknote-server:$FULL_VERSION" >> $GITHUB_ENV
           
