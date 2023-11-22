@@ -16,21 +16,23 @@ import {
     logInOutline as logInIcon,
     logOutOutline as logOutIcon,
 } from 'ionicons/icons';
+import { useAuth } from "../contexts/AuthContext";
 
 
 const routes = {
     appPages: [
-        { title: 'Login', path: '/tabs/login', icon: logInIcon },
-        { title: 'Signup', path: '/tabs/signup', icon:  addIcon },
-        { title: 'Timeline', path: '/tabs/timeline', icon: flaskIcon },
-        { title: 'ComponentLab', path: '/tabs/comlab', icon: flaskIcon },
+        { title: 'Login', path: '/login', icon: logInIcon },
+        { title: 'Signup', path: '/signup', icon: addIcon },
+        // { title: 'Timeline', path: '/tabs/timeline', icon: flaskIcon },
+        // { title: 'ComponentLab', path: '/tabs/comlab', icon: flaskIcon },
     ],
     loggedInPages: [
-        { title: 'Logout', path: '/tabs/login', icon: 'log-out' },
+        { title: 'Timelines', path: '/timeline', icon: logInIcon },
+        { title: 'Logout', path: '/logout', icon: logInIcon },
     ],
     loggedOutPages: [
-        { title: 'Login', path: '/tabs/login', icon: 'log-in' },
-        { title: 'Signup', path: '/tabs/signup', icon: 'person-add' },
+        { title: 'Login', path: '/login', icon: logInIcon },
+        { title: 'Signup', path: '/signup', icon: logInIcon },
     ]
 }
 
@@ -45,6 +47,7 @@ interface MenuProps {
 }
 
 const Menu: React.FC<MenuProps> = ({ }) => {
+    const { isAuthenticated } = useAuth();
 
     function renderlistItems(list: Pages[]) {
         // Ensure only pages with a path are rendered
@@ -64,14 +67,14 @@ const Menu: React.FC<MenuProps> = ({ }) => {
         <IonMenu contentId="main">
             <IonContent>
                 <IonList>
-                    <IonListHeader>Menu</IonListHeader>
-                    {renderlistItems(routes.appPages)}
+                    <IonListHeader>Account</IonListHeader>
+                    {isAuthenticated ? renderlistItems(routes.loggedInPages) :renderlistItems(routes.appPages)}
                 </IonList>
                 {/* <IonList>
                     <IonListHeader>Account</IonListHeader>
                     {renderlistItems(routes.loggedInPages)}
-                </IonList>
-                <IonList>
+                </IonList> */}
+                {/* <IonList>
                     <IonListHeader>Account</IonListHeader>
                     {renderlistItems(routes.loggedOutPages)}
                 </IonList> */}

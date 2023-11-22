@@ -17,7 +17,7 @@ import {
 } from '@ionic/react';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Redirect, useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 
 
 

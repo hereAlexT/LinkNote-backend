@@ -6,7 +6,7 @@ const AuthContext = createContext({
     user: null,
     isAuthenticated: false,
     login: (email: string, password: string): boolean => { return false; },
-    logout: () => { },
+    logout: () => {},
 });
 
 const initialState = {
@@ -28,6 +28,7 @@ function reducer(state: State, action: Action) {
         case "login":
             return { ...state, user: action.payload, isAuthenticated: true }
         case "logout":
+            console.log("reducer : logout")
             return { ...state, user: null, isAuthenticated: false };
         default:
             throw new Error("Unknown action type");
@@ -62,6 +63,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         }
     }
     function logout() {
+        console.log("AuthenContext - logout")
         dispatch({ type: "logout" });
     }
 
