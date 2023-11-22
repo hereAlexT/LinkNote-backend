@@ -209,6 +209,7 @@ jobs:
           POSTGRES_DB=${POSTGRES_DB}
           POSTGRES_USER=${POSTGRES_USER}
           POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+          APP_VERSION=${APP_VERSION}
           EOF
           scp -o StrictHostKeyChecking=no -P "${SERVER_SSH_PORT}" -i e2e_private_key.key .env "${SERVER_USER}"@"${SERVER_HOST}":~/
  
@@ -225,7 +226,6 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           FULL_IMAGE_NAME: ${{ env.FULL_IMAGE_NAME }}
           APP_VERSION: ${{ env.FULL_VERSION }}
-
 
         run: |
           

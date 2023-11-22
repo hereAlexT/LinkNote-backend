@@ -191,6 +191,7 @@ jobs:
           POSTGRES_DB=${POSTGRES_DB}
           POSTGRES_USER=${POSTGRES_USER}
           POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+          APP_VERSION=${APP_VERSION}
           EOF
           scp -o StrictHostKeyChecking=no -P "${SERVER_SSH_PORT}" -i prod_private_key.key .env "${SERVER_USER}"@"${SERVER_HOST}":~/
 
