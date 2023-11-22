@@ -19,44 +19,23 @@
 
 name: Prod Deployment
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  create:
     branches:
       - 'main'
-    paths-ignore:
-      - "readme.md"
-      - "doc/**"
-      - "attachment/**"
-      - "LICENSE"
-      - "docker-compose.dev.yml"
-      - "*.md"
-  push:
-    branches:
-      - 'main'
-    paths-ignore:
-      - "readme.md"
-      - "doc/**"
-      - "attachment/**"
-      - "LICENSE"
-      - "docker-compose.dev.yml"
-      - "*.md"
 
 
 jobs:
   server-test:
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Extract version from branch name and create full version
         id: set_version
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-          VERSION=$(echo ${{ github.base_ref }} | sed 's/refs\/heads\/release\/v//')
-          else
-          VERSION=$(echo $GITHUB_REF | sed 's/refs\/heads\/release\/v//')
-          fi
+          VERSION=$(echo $GITHUB_REF | sed 's/refs\/tags\///')
           CURRENT_DATE=$(date +'%Y%m%d')
-          FULL_VERSION="pr-${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
+          FULL_VERSION="main-${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
           echo "FULL_VERSION=${FULL_VERSION}" >> $GITHUB_ENV
           echo "FULL_IMAGE_NAME=linklabs1117/linknote-server:${FULL_VERSION}" >> $GITHUB_ENV
 
@@ -125,7 +104,7 @@ jobs:
 
 
   docker-image-upload-and-prod-deployment:
-    if: ${{ github.event_name == 'push' }}
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -134,13 +113,9 @@ jobs:
       - name: Extract version from branch name and create full version
         id: set_version
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-          VERSION=$(echo ${{ github.base_ref }} | sed 's/refs\/heads\/release\/v//')
-          else
-          VERSION=$(echo $GITHUB_REF | sed 's/refs\/heads\/release\/v//')
-          fi
+          VERSION=$(echo $GITHUB_REF | sed 's/refs\/tags\///')
           CURRENT_DATE=$(date +'%Y%m%d')
-          FULL_VERSION="pr-${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
+          FULL_VERSION="main-${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
           echo "FULL_VERSION=${FULL_VERSION}" >> $GITHUB_ENV
           echo "FULL_IMAGE_NAME=linklabs1117/linknote-server:${FULL_VERSION}" >> $GITHUB_ENV
 

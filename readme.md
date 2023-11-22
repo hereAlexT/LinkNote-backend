@@ -32,6 +32,8 @@ All table and filed name in database should be lower case.
 Reference: [A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model/)
 
 
+#### CICD Workflow
+![CICD Workflow](./doc/cicd_workflow.png)
 #### Remove Springdoc Settings
 Remove springdoc settings in SecurityConfig.java and JwtFilter in prod
 
