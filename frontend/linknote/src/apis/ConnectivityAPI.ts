@@ -2,7 +2,14 @@ import { API_HEALTH } from "./ApiConfig";
 import axios from 'axios'
 
 
-
+export default interface HealthData {
+    data: {
+        health: boolean;
+        version: string;
+    };
+    code: number;
+    msg: string;
+}
 
 async function GetServerHealthData() {
     try {

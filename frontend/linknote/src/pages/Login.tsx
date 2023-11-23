@@ -18,7 +18,8 @@ import {
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useHistory } from 'react-router';
-import { GetServerHealthData, HealthData } from '../apis/ConnectivityAPI';
+import { GetServerHealthData} from '../apis/ConnectivityAPI';
+import HealthData from "../apis/ConnectivityAPI";
 
 
 const Login: React.FC = () => {
