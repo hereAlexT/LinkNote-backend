@@ -18,7 +18,7 @@ import {
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useHistory } from 'react-router';
-
+import { GetServerHealthData, HealthData } from '../apis/ConnectivityAPI';
 
 
 const Login: React.FC = () => {
@@ -30,14 +30,9 @@ const Login: React.FC = () => {
     const { login, isAuthenticated } = useAuth();
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-
         console.log("submit button clicked")
-
         // Prevent the default behaviour (refresh page) of the form submit event
         e.preventDefault();
-
-
-
         // If the user has entered an email and password, attempt to log them in
         if (email && password) {
             const loginSuccess: boolean | null = login(email, password);
@@ -54,8 +49,6 @@ const Login: React.FC = () => {
         }
     }, [isAuthenticated]);
 
-
-
     /* Email Address Validation 
     * You don't want to show validation while the user is typing.
     * Validation should only occur when the user finishes typing.
@@ -70,11 +63,8 @@ const Login: React.FC = () => {
 
     const validate = (ev: Event) => {
         const value = (ev.target as HTMLInputElement).value;
-
         setIsValid(undefined);
-
         if (value === '') return;
-
         validateEmail(value) !== null ? setIsValid(true) : setIsValid(false);
     };
 
@@ -82,6 +72,16 @@ const Login: React.FC = () => {
         setIsTouched(true);
     };
     /* Email Validation Done */
+
+
+    const [isHelathData, setIsHealthData] = useState<HealthData | null>(null)
+    useEffect(() => {
+        GetServerHealthData().then((response) => {
+            setIsHealthData(response)
+        })
+    })
+
+
 
 
     return (
@@ -136,6 +136,14 @@ const Login: React.FC = () => {
                             <IonButton type="submit" expand="block">Login</IonButton>
                             {/* <Button type="primary">Login</Button> */}
                         </IonCol>
+                        <IonCol>
+                            <IonText color="medium">
+                                <p> debug info: </p>
+                                <p>Server Status: {isHelathData?.data?.health ? 'Healthy' : 'Unhealthy'}</p>
+                                <p>Server Version: {isHelathData?.data?.version}</p>
+                            </IonText>
+                        </IonCol>
+
                     </form>
 
                 </IonGrid>
