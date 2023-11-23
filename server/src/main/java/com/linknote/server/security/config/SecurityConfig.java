@@ -44,7 +44,7 @@ public class SecurityConfig {
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration config = new CorsConfiguration();
                         //todo: this should be set as environment variable
-                        config.setAllowedOrigins(Collections.singletonList("http://localhost"));
+                        config.setAllowedOrigins(Collections.singletonList("http://localhost", "http://*.linklabs.app"));
                         config.setAllowedMethods(Collections.singletonList("*"));
                         config.setAllowCredentials(true);
                         config.setAllowedHeaders(Collections.singletonList("*"));
