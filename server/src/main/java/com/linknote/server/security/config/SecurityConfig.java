@@ -19,6 +19,7 @@ import org.springframework.security.web.session.DisableEncodeUrlFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class SecurityConfig {
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration config = new CorsConfiguration();
                         //todo: this should be set as environment variable
-                        config.setAllowedOrigins(Collections.singletonList("http://localhost", "http://*.linklabs.app"));
+                        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://*.linklabs.app"));
                         config.setAllowedMethods(Collections.singletonList("*"));
                         config.setAllowCredentials(true);
                         config.setAllowedHeaders(Collections.singletonList("*"));
