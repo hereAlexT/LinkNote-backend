@@ -134,7 +134,7 @@ const Login: React.FC = () => {
                             </IonText>
                         </IonCol>
                         <IonCol>
-                            <IonButton type="submit" expand="block">Login</IonButton>
+                            <IonButton color="secondary"  type="submit" expand="block">Login</IonButton>
                             {/* <Button type="primary">Login</Button> */}
                         </IonCol>
                         <IonCol>

@@ -59,7 +59,7 @@ const CardEditor: React.FC<ContainerProps> = ({ onCreateNote, note }) => {
                         </IonRow>
                         <IonRow class="ion-justify-content-end">
                             <IonCol size="auto">
-                                <IonButton item-end size="small" onClick={submitNote}>Submit</IonButton>
+                                <IonButton color="tertiary" item-end size="small" onClick={submitNote}>Submit</IonButton>
                             </IonCol>
                         </IonRow>
                     </IonGrid>
