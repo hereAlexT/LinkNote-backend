@@ -81,7 +81,7 @@ const Routes: React.FC = () => {
       <Route path="/comlab" component={ComponentLab} />
       <Route exact path="/logout" render={() => {
         console.log('Logout route hit');
-        console.log('Logout function:', lxogout);
+        console.log('Logout function:', logout);
         logout();
         return <Redirect to="/login" />
       }} />
