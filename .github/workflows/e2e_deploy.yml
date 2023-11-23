@@ -51,7 +51,7 @@ jobs:
         run: |
           VERSION=$(echo $GITHUB_REF | sed 's/refs\/heads\/release\/v//')
           CURRENT_DATE=$(date +'%Y%m%d')
-          FULL_VERSION="${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
+          FULL_VERSION="candidate-${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
           echo "FULL_VERSION=${FULL_VERSION}" >> $GITHUB_ENV
           echo "FULL_IMAGE_NAME=linklabs1117/linknote-server:${FULL_VERSION}" >> $GITHUB_ENV
 
@@ -96,6 +96,7 @@ jobs:
         env:
           SPRING_PROFILES_ACTIVE: test
           VERSION: ${{ env.FULL_VERSION }}
+          APP_VERSION: ${{ env.FULL_VERSION }}
 
       ### Switch to Java-17 and run the rest assure test
       - name: Set up JDK 17
@@ -132,7 +133,7 @@ jobs:
         run: |
           VERSION=$(echo $GITHUB_REF | sed 's/refs\/heads\/release\/v//')
           CURRENT_DATE=$(date +'%Y%m%d')
-          FULL_VERSION="${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
+          FULL_VERSION="candidate-${VERSION}-${CURRENT_DATE}-${GITHUB_RUN_NUMBER}"
           echo "FULL_VERSION=${FULL_VERSION}" >> $GITHUB_ENV
           echo "FULL_IMAGE_NAME=linklabs1117/linknote-server:$FULL_VERSION" >> $GITHUB_ENV
           
@@ -156,6 +157,7 @@ jobs:
       - name: Run tests and package
         env:
           SPRING_PROFILES_ACTIVE: prod
+          APP_VERSION: ${{ env.FULL_VERSION }}
         run: mvn --file server/pom.xml --batch-mode --update-snapshots verify
 
       - name: Set up QEMU
@@ -198,6 +200,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           FULL_IMAGE_NAME: ${{ env.FULL_IMAGE_NAME }}
+          APP_VERSION: ${{ env.FULL_VERSION }}
         run: |
           cat << EOF > .env
           FULL_IMAGE_NAME=${FULL_IMAGE_NAME}
@@ -206,6 +209,7 @@ jobs:
           POSTGRES_DB=${POSTGRES_DB}
           POSTGRES_USER=${POSTGRES_USER}
           POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+          APP_VERSION=${APP_VERSION}
           EOF
           scp -o StrictHostKeyChecking=no -P "${SERVER_SSH_PORT}" -i e2e_private_key.key .env "${SERVER_USER}"@"${SERVER_HOST}":~/
  
@@ -221,6 +225,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           FULL_IMAGE_NAME: ${{ env.FULL_IMAGE_NAME }}
+          APP_VERSION: ${{ env.FULL_VERSION }}
 
         run: |
           

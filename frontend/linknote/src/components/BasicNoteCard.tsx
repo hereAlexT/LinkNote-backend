@@ -7,11 +7,11 @@ import {
     IonButton,
     IonCol,
     IonRow,
-    IonItem, 
-    IonList, 
-    IonSelect, 
-    IonSelectOption, 
-    IonPopover, 
+    IonItem,
+    IonList,
+    IonSelect,
+    IonSelectOption,
+    IonPopover,
     IonContent,
     IonActionSheet,
     IonIcon
@@ -24,41 +24,50 @@ interface ContainerProps {
     noteId: NoteId;
     createdDate: Date;
     body: string;
-    onDeleteNote (noteId: NoteId): void;
-    onEditNote (noteId: NoteId ) : void;
+    onDeleteNote(noteId: NoteId): void;
+    onEditNote(noteId: NoteId): void;
 }
 
-const BasicNoteCard: React.FC<ContainerProps> = ({ noteId, createdDate, body , onDeleteNote, onEditNote}) => {
+const BasicNoteCard: React.FC<ContainerProps> = ({ noteId, createdDate, body, onDeleteNote, onEditNote }) => {
     return (
-        <div className="m-0 p-0 w-full">
-            <IonCard >
-                <IonCardContent className="">
-                    <IonRow className="ion-justify-content-end ion-align-items-start" style={{ padding: 0 }}>
-                        <IonCol size="auto">
-                            <IonButton item-end size="small" fill="clear" id={`note-popover-${noteId}`}>
-                                <IonIcon slot="icon-only" icon={meanuOutlineIcon}></IonIcon>
-                            </IonButton>
-                            <IonPopover trigger={`note-popover-${noteId}`} dismissOnSelect={true}>
-                                <IonContent>
-                                    <IonList>
-                                        <IonItem button={true} detail={false} onClick={((e) => onEditNote(noteId))}>
-                                            Edit
-                                        </IonItem>
-                                        <IonItem button={true} detail={false} onClick={(e) => onDeleteNote(noteId)}>
-                                            Delete
-                                        </IonItem>
-                                    </IonList>
-                                </IonContent>
-                            </IonPopover>
-                        </IonCol>
-                    </IonRow>
+        <>
+            <div className="m-0 p-0 w-full">
+                <IonCard >
+                    <IonCardContent className="">
+                        <IonRow className="ion-justify-content-end ion-align-items-start" style={{ padding: 0 }}>
+                            <IonCol size="auto">
+                                <IonButton item-end size="small" fill="clear" id={`note-popover-${noteId}`}>
+                                    <IonIcon slot="icon-only" icon={meanuOutlineIcon}></IonIcon>
+                                </IonButton>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow> {body}</IonRow>
+                        <IonRow><IonCardSubtitle className="">{createdDate.toISOString()}</IonCardSubtitle></IonRow>
 
-                    <IonRow> {body}</IonRow>
-                    <IonRow><IonCardSubtitle className="">{createdDate.toISOString()}</IonCardSubtitle></IonRow>
+                    </IonCardContent>
+                </IonCard>
 
-                </IonCardContent>
-            </IonCard>
-        </div>
+            </div>
+            <IonPopover
+                trigger={`note-popover-${noteId}`}
+                dismissOnSelect={true}
+                keyboardClose={true}
+                side="bottom"
+                alignment='end'
+                showBackdrop={false}
+            >
+                <IonContent>
+                    <IonList>
+                        <IonItem button={true} detail={false} onClick={((e) => onEditNote(noteId))}>
+                            Edit
+                        </IonItem>
+                        <IonItem button={true} detail={false} onClick={(e) => onDeleteNote(noteId)}>
+                            Delete
+                        </IonItem>
+                    </IonList>
+                </IonContent>
+            </IonPopover>
+        </>
 
     );
 };

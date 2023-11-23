@@ -18,7 +18,8 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -27,18 +28,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsServiceImpl userDetailsService;
 
-
-
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain
-    ) throws ServletException, IOException {
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final Long userId;
-        //If there is no token in header throw an Exception
+        // If there is no token in header throw an Exception
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new TokenNotProvidedException(null);
         }
@@ -46,18 +44,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
         userId = jwtService.extractUserId(jwt);
         if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            //todo: should grad userDetails from Redis rather than postgres
+            // todo: should grad userDetails from Redis rather than postgres
             UserDetailsImpl userDetails = this.userDetailsService.loadUserByUserId(userId);
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
-                        userDetails.getAuthorities()
-                );
+                        userDetails.getAuthorities());
 
                 authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
+                        new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
@@ -66,22 +62,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     }
 
-//    private static final String[] SWAGGER_PATHS = {"/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/webjars/swagger-ui/**", "/context-path/swagger-ui.html", "/context-path/v3/api-docs", "/api-docs"};
+    // private static final String[] SWAGGER_PATHS = {"/swagger-ui.html",
+    // "/v3/api-docs/**", "/swagger-ui/**", "/webjars/swagger-ui/**",
+    // "/context-path/swagger-ui.html", "/context-path/v3/api-docs", "/api-docs"};
 
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
+        List<String> urls = Arrays.asList("/api/v1/health", "/api/v1/auth/**");
 
-        // Check if the path matches any of the Swagger paths
-//        for (String swaggerPath : SWAGGER_PATHS) {
-//            if (antPathMatcher.match(swaggerPath, path)) {
-//                return true;
-//            }
-//        }
+        for (String url : urls) {
+            if (antPathMatcher.match(url, path)) {
+                return true;
+            }
+        }
 
-        // Check if the path matches the auth path
-        return antPathMatcher.match("/api/v1/auth/**", path);
+        return false;
     }
 }
