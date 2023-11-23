@@ -45,15 +45,15 @@ const MainTabs: React.FC<MainTabsProps> = () => {
 
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
-                <IonTabButton tab="tab1" href="/tabs/signup">
+                <IonTabButton tab="signup" href="/tabs/signup">
                     <IonIcon aria-hidden="true" icon={triangle} />
                     <IonLabel>Signup</IonLabel>
                 </IonTabButton>
-                <IonTabButton tab="tab2" href="/tabs/login">
+                <IonTabButton tab="login" href="/tabs/login">
                     <IonIcon aria-hidden="true" icon={ellipse} />
                     <IonLabel>Login</IonLabel>
                 </IonTabButton>
-                <IonTabButton tab="tab3xw" href="/tabs/timeline">
+                <IonTabButton tab="timeline" href="/tabs/timeline">
                     <IonIcon aria-hidden="true" icon={square} />
                     <IonLabel>Tab 3</IonLabel>
                 </IonTabButton>
