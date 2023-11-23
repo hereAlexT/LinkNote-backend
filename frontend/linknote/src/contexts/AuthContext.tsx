@@ -38,9 +38,9 @@ function reducer(state: State, action: Action) {
 
 const TEST_USER = {
     userId: "123",
-    displayName: "John Doe",
+    displayName: "Crazy John",
     password: "password",
-    email: "johndoe@example.com",
+    email: "demo@linklabs.app",
     createdDate: new Date(),
 };
 

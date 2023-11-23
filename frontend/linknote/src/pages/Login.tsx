@@ -23,7 +23,7 @@ import { useHistory } from 'react-router';
 
 const Login: React.FC = () => {
     const history = useHistory();
-    const [email, setEmail] = useState("johndoe@example.com");
+    const [email, setEmail] = useState("demo@linklabs.app");
     const [password, setPassword] = useState("password");
     const [isLoginFailed, setLoginFailed] = useState(false);
 
@@ -117,7 +117,7 @@ const Login: React.FC = () => {
                             <IonInput
                                 type="password"
                                 fill="solid"
-                                label="password"
+                                label="Password"
                                 labelPlacement="floating"
                                 errorText='Invalid password'
                                 counter={true}
@@ -126,6 +126,11 @@ const Login: React.FC = () => {
                                 value={password}
                                 onIonChange={(e) => setPassword(e.detail.value!)}
                             ></IonInput>
+                        </IonCol>
+                        <IonCol>
+                            <IonText color="medium">
+                                <p>Just click "login" </p>
+                            </IonText>
                         </IonCol>
                         <IonCol>
                             <IonButton type="submit" expand="block">Login</IonButton>
