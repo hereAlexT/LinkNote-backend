@@ -73,7 +73,7 @@ const Routes: React.FC = () => {
 
   return (
     <IonRouterOutlet id="main">
-      <Route path="/" component={Signup} exact={true} />
+      <Route path="/" component={Login} exact={true} />
       <Route path="/tabs" render={() => <MainTabs />} />
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={Login} />

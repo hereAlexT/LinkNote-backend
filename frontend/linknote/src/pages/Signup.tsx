@@ -43,12 +43,12 @@ const Signup: React.FC = () => {
 
 
     return (
-        <IonPage>
+        <IonPage id="main">
             <IonHeader>
                 <IonToolbar>
-                    {/* <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons> */}
+                    <IonButtons slot="start">
+                        <IonMenuButton />
+                    </IonButtons>
                     <IonTitle>Sign up</IonTitle>
                 </IonToolbar>
             </IonHeader>
@@ -87,7 +87,7 @@ const Signup: React.FC = () => {
                                 minlength={8}
                                 onIonChange={(e) => setPassword(e.detail.value!)}
                                 disabled={true}
-                                />
+                            />
                         </IonRow>
                         <IonRow>
                             <IonInput
@@ -96,10 +96,10 @@ const Signup: React.FC = () => {
                                 labelPlacement="floating"
                                 counter={true}
                                 maxlength={32}
-                                minlength={8} 
+                                minlength={8}
                                 onIonChange={(e) => setDisplayName(e.detail.value!)}
                                 disabled={true}
-                                />
+                            />
                         </IonRow>
                         <IonRow>
                             <IonCol className="ion-padding-top">

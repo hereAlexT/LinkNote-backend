@@ -13,7 +13,9 @@ import {
     IonPopover,
     IonList,
     IonItem,
-    IonAlert
+    IonAlert,
+    IonButtons,
+    IonMenuButton
 } from '@ionic/react';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
@@ -86,9 +88,12 @@ const Login: React.FC = () => {
 
 
     return (
-        <IonPage>
+        <IonPage id="main">
             <IonHeader>
                 <IonToolbar>
+                <IonButtons slot="start">
+                        <IonMenuButton />
+                    </IonButtons>
                     <IonTitle>Login</IonTitle>
                 </IonToolbar>
             </IonHeader>

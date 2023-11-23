@@ -103,13 +103,12 @@ const TimeLine: React.FC = () => {
 
 
     return (
-        <IonPage id="main-content">
+        <IonPage id="main">
             <IonHeader>
 
                 <IonToolbar>
                     <IonButtons slot="start">
                         <IonMenuButton />
-
                     </IonButtons>
                     <IonTitle>Timeline</IonTitle>
                     {/* <IonSearchbar disabled={true} placeholder="Search function under developing"></IonSearchbar> */}
