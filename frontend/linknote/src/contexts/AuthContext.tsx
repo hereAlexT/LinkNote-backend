@@ -30,6 +30,9 @@ function reducer(state: State, action: Action) {
         case "logout":
             console.log("reducer : logout")
             return { ...state, user: null, isAuthenticated: false };
+        case "signup":
+            console.log("reducer : signup")
+            return { ...state, user: action.payload, isAuthenticated: true };
         default:
             throw new Error("Unknown action type");
     }
@@ -67,9 +70,17 @@ function AuthProvider({ children }: AuthProviderProps) {
         dispatch({ type: "logout" });
     }
 
+    function signup(email: string, password: string, displayName: string) {
+        console.log("AuthenContext - signup")
+
+
+        
+        dispatch({ type: "signup", payload: { email, password, displayName }})
+    }
+
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ user, isAuthenticated, login, logout, signup }}>
             {children}
         </AuthContext.Provider>
     )

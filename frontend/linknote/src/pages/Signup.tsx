@@ -1,5 +1,6 @@
 import { IonContent, IonHeader, IonInput, IonPage, IonText, IonTitle, IonToolbar, IonButton, IonGrid, IonCol, IonRow, IonButtons, IonMenuButton } from '@ionic/react';
 import { useState } from 'react';
+import { Signup as HandleSignup, Login as HanldeLogin } from '../apis/AuthenticationAPI';
 
 
 const Signup: React.FC = () => {
@@ -24,6 +25,8 @@ const Signup: React.FC = () => {
         validateEmail(value) !== null ? setIsValid(true) : setIsValid(false);
     };
 
+
+
     const markTouched = () => {
         setIsTouched(true);
     };
@@ -33,13 +36,17 @@ const Signup: React.FC = () => {
     const [password, setPassword] = useState("");
     const [displayName, setDisplayName] = useState("");
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(email, password, displayName)
-    }
+        const { data, error } = await HandleSignup(email, password);
+        if (data?.user?.identities?.length === 0) {
+            alert("This user already exists");
+        }
+        console.log(email, password, displayName);
+        console.log(data)
+        console.log(error)
 
-
-
+    };
 
 
     return (
@@ -72,7 +79,7 @@ const Signup: React.FC = () => {
                                 onIonInput={(event) => validate(event)}
                                 onIonBlur={() => markTouched()}
                                 onIonChange={(e) => setEmail(e.detail.value!)}
-                                disabled={true}
+                                disabled={false}
                             />
 
                         </IonRow>
@@ -86,7 +93,7 @@ const Signup: React.FC = () => {
                                 maxlength={32}
                                 minlength={8}
                                 onIonChange={(e) => setPassword(e.detail.value!)}
-                                disabled={true}
+                                disabled={false}
                             />
                         </IonRow>
                         <IonRow>
@@ -98,19 +105,15 @@ const Signup: React.FC = () => {
                                 maxlength={32}
                                 minlength={8}
                                 onIonChange={(e) => setDisplayName(e.detail.value!)}
-                                disabled={true}
+                                disabled={false}
                             />
                         </IonRow>
                         <IonRow>
                             <IonCol className="ion-padding-top">
-                                <IonButton expand="block" href="/timeline" disabled>Signup not supported in pre-release</IonButton>
+                                <IonButton type="submit" expand="block">Signup</IonButton>
                             </IonCol>
                         </IonRow>
-                        <IonRow>
-                            <IonCol>
-                                <IonText> - This is a pre-release version . <br /> - Data may not persistent. <br /> - Dont input sensitive data.</IonText>
-                            </IonCol>
-                        </IonRow>
+
                     </form>
                 </IonGrid>
 

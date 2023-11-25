@@ -45,7 +45,6 @@ const Login: React.FC = () => {
         }
     }
 
-    console.log("isAuthenticated: ", isAuthenticated)
     useEffect(() => {
         if (isAuthenticated) {
             history.push("/timeline");
